@@ -7,11 +7,6 @@ body {
     background-size: cover;
 }
 
-h2,
-.form-inputs {
-    text-align: center;
-}
-
 .estilo-login {
     margin-top: 25px;
     width: 100%;
@@ -22,11 +17,11 @@ h2,
 
 .boton {
     cursor: pointer;
-    width: 100% !important;
+    width: 100%;
     padding: 0.5rem 1rem;
     font-size: 1.25rem;
     border-radius: 0.3rem;
     color: #fff;
-    background-color: #36dcf1;
-    border-color: #f3b020;
+    background-color: #f8aa43;
+    
 }
