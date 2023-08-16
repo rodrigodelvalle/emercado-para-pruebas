@@ -23,3 +23,9 @@ window.onload = function() {
 
     let bienvenida = document.getElementById("username").value = localStorage.getItem("username");
 };
+
+click = document.getElementById("login");
+
+click.addEventListener("click", function () {
+  alert('Bienvenid@ a E-mercado: ' + username.value)
+})
