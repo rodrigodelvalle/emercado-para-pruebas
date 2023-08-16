@@ -29,3 +29,19 @@ click = document.getElementById("login");
 click.addEventListener("click", function () {
   alert('Bienvenid@ a E-mercado: ' + username.value)
 })
+
+//const checkbox = document.getElementById ("remember");
+//const username = document.getElementById ("username");
+//const btn = document.getElementById ("login");
+
+
+function guardarInfo () {
+    if (rememberMe.checked && click) {
+        sessionStorage.setItem ("username", username.value)
+    }
+    else {
+        window.location.href = "login.html"
+    }
+}
+
+checkbox.addEventListener ('change', guardarInfo)
