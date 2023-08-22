@@ -1,32 +1,42 @@
-const URL_PRODUCTS_CAR = "https://japceibal.github.io/emercado-api/cats_products/101.json";
+const catID = localStorage.getItem("catID");
+const URL_PRODUCTS = "https://japceibal.github.io/emercado-api/cats_products/"+ catID + ".json";
+let productsCar = document.getElementById("containerItems");
 
-let productsCar = document.getElementById("containerAuto");
+function namesCategory (items) {
+let names = document.getElementById("categoryName")
+let htmlContentToAppend =  ` <h1>${items.catName}</h1>
+<p class="lead">Verás aquí lo que estas buscando.</p> ` 
+names.innerHTML=htmlContentToAppend
+}
 
-function showCategoryCar(car) {
-    let carArray = car.products
+function showCategory(items) {
+    let itemsArray = items.products
     let htmlContentToAppend = "";
-    for (let i = 0; i < carArray.length; i++) {
+    for (let i = 0; i < itemsArray.length; i++) {
         htmlContentToAppend += `
             <div class="list-group-item list-group-item-action cursor-active">
                 <div class="row">
                     <div class="col-3">
-                        <img src="${carArray[i].image}" alt="${carArray[i].description}" class="img-thumbnail">
+                        <img src="${itemsArray[i].image}" alt="${itemsArray[i].description}" class="img-thumbnail">
                     </div>
                     <div class="col">
                         <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${carArray[i].name} - ${carArray[i].currency}  ${carArray[i].cost}</h4>
-                            <small class="text-muted">${carArray[i].soldCount} artículos</small>
+                            <h4 class="mb-1">${itemsArray[i].name} - ${itemsArray[i].currency}  ${itemsArray[i].cost}</h4>
+                            <small class="text-muted">${itemsArray[i].soldCount} artículos</small>
                         </div>
-                        <p class="mb-1">${carArray[i].description}</p>
+                        <p class="mb-1">${itemsArray[i].description}</p>
                     </div>
                 </div>
             </div>
             `
     }
 
-    document.getElementById("containerAuto").innerHTML = htmlContentToAppend;
+    document.getElementById("containerItems").innerHTML = htmlContentToAppend;
 }
 
-fetch(URL_PRODUCTS_CAR)
+fetch(URL_PRODUCTS)
     .then(res => res.json())
-    .then(data => showCategoryCar(data))
+    .then(data => {
+        namesCategory(data)
+        showCategory(data)} )
+
