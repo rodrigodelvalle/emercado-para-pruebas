@@ -1,12 +1,11 @@
 const catID = localStorage.getItem("catID");
-const URL_PRODUCTS = "https://japceibal.github.io/emercado-api/cats_products/"+ catID + ".json";
-let productsCar = document.getElementById("containerItems");
+const URL_PRODUCTS = "https://japceibal.github.io/emercado-api/cats_products/" + catID + ".json";
 
-function namesCategory (items) {
-let names = document.getElementById("categoryName")
-let htmlContentToAppend =  ` <h1>${items.catName}</h1>
-<p class="lead">Verás aquí lo que estas buscando.</p> ` 
-names.innerHTML=htmlContentToAppend
+function namesCategory(items) {
+    let names = document.getElementById("categoryName")
+    let htmlContentToAppend = ` <h1>${items.catName}</h1>
+<p class="lead">Verás aquí lo que estas buscando.</p> `
+    names.innerHTML = htmlContentToAppend
 }
 
 function showCategory(items) {
@@ -34,9 +33,46 @@ function showCategory(items) {
     document.getElementById("containerItems").innerHTML = htmlContentToAppend;
 }
 
+// Acá es donde implemente el filter, pero no estaría funcionando
+document.getElementById("rangeFilterCount").addEventListener("click", function () {
+    let minPrice = document.getElementById("rangeFilterCountMin").value;
+    let maxPrice = document.getElementById("rangeFilterCountMax").value;
+
+    if ((minPrice != undefined) && (minPrice != "") && (parseInt(minPrice)) >= 0) {
+        minPrice = parseInt(minPrice);
+    }
+    else {
+        minPrice = undefined;
+    }
+
+    if ((maxPrice != undefined) && (maxPrice != "") && (parseInt(maxPrice)) >= 0) {
+        maxPrice = parseInt(maxPrice);
+    }
+    else {
+        maxPrice = undefined;
+    }
+
+    fetch(URL_PRODUCTS)
+        .then(response => response.json())
+        .then(data => {
+            const filterPrice = data.filter(product => product.cost >= minPrice && product.cost <= maxPrice);
+            showCategory(filterPrice);
+        })
+})
+
+// Es la misma que aparece en categories.js (para que funcione el boton "Limpiar")
+document.getElementById("clearRangeFilter").addEventListener("click", function () {
+    document.getElementById("rangeFilterCountMin").value = "";
+    document.getElementById("rangeFilterCountMax").value = "";
+
+    minPrice = undefined;
+    maxPrice = undefined;
+});
+
 fetch(URL_PRODUCTS)
     .then(res => res.json())
     .then(data => {
         namesCategory(data)
-        showCategory(data)} )
+        showCategory(data)
+    })
 
