@@ -91,6 +91,7 @@ document.getElementById("rangeFilterCount").addEventListener("click", function (
                     return true;
                 });
                 //console.log(filterPrice);
+                filterPrice.sort((a, b) => a.cost - b.cost);
                 showArrayPrice(filterPrice);
             }
         })
