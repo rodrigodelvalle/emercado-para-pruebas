@@ -116,3 +116,22 @@ fetch(URL_PRODUCTS)
         namesCategory(data);
         showCategory(data);
     });
+
+
+//Se establece una contante con lo ingresado en la linea 43 (de 40 a 44) del prodcuto.html
+const searchInput = document.getElementById("productSearch");
+
+//Al momento que se escribe algo, se toma la contante ya creada, se obtiene su valor, se la pasa a minúsculas y se eliminan los espacios iniciales y finales con .trim()
+searchInput.addEventListener("input", function () {
+    const searchText = searchInput.value.toLowerCase().trim();
+
+    //Se usa .filter sobre originalData.prodcto para obtener la los valores de la API que ocurren dentro de (product =>)
+    const filteredProducts = originalData.products.filter(product => {
+        const productName = product.name.toLowerCase();  //esto nos da el título en minuscula
+        const productDescription = product.description.toLowerCase();  //nos da la descripción en minuscula
+        return productName.includes(searchText) || productDescription.includes(searchText); // nos retorna TODOS los valores que matcheen contra el título o la disripción
+    });
+
+    //Muestra lo filtrado. Al final no recurrí a hacer otro fetch sino que fui directo a la constante "originData"
+    showCategory({ products: filteredProducts });   
+});
