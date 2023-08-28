@@ -133,5 +133,36 @@ searchInput.addEventListener("input", function () {
     });
 
     //Muestra lo filtrado. Al final no recurrí a hacer otro fetch sino que fui directo a la constante "originData"
+    
     showCategory({ products: filteredProducts });   
+});btnDesc.addEventListener('click', function () {
+    const itemsArray = originalData.products.slice(); 
+    
+    itemsArray.sort(function (a, b) {
+        // Ordenar por costo de forma descendente
+        return b.cost - a.cost;
+    });
+    
+    showCategory({ products: itemsArray });
+});
+
+btnAsc.addEventListener('click', function () {
+    const itemsArray = originalData.products.slice(); 
+    
+    itemsArray.sort(function (a, b) {
+       
+        return a.cost - b.cost;
+    });
+    
+    showCategory({ products: itemsArray });
+});
+
+relevant.addEventListener('click', function () {
+    const itemsArray = originalData.products.slice(); 
+    
+    itemsArray.sort(function (a, b) {
+        return b.soldCount - a.soldCount;
+    });
+    
+    showCategory({ products: itemsArray });
 });
