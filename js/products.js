@@ -133,9 +133,16 @@ searchInput.addEventListener("input", function () {
     });
 
     //Muestra lo filtrado. Al final no recurrí a hacer otro fetch sino que fui directo a la constante "originData"
-    
+
     showCategory({ products: filteredProducts });   
-});btnDesc.addEventListener('click', function () {
+})
+
+const btnDesc = document.getElementById ("sortByCount1");
+const btnAsc = document.getElementById ("sortByCount2");
+const relevant = document.getElementById ("sortByRel");
+
+
+btnDesc.addEventListener('click', function () {
     const itemsArray = originalData.products.slice(); 
     
     itemsArray.sort(function (a, b) {
