@@ -86,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let itemsArray = originalData.slice();
 
         itemsArray.sort(function (a, b) {
-
             return b.cost - a.cost;
         });
 
@@ -97,7 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let itemsArray = originalData.slice();
 
         itemsArray.sort(function (a, b) {
-
             return a.cost - b.cost;
         });
 
@@ -106,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     relevant.addEventListener('click', function () {
         let itemsArray = originalData.slice();
-        0
+
         itemsArray.sort(function (a, b) {
             return b.soldCount - a.soldCount;
         });
