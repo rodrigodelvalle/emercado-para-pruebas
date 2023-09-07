@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let originalData = [];
     let nameCat = "";
 
+    //Array que contiene elementos obtenidos de api (fetch)
+    let productsArray = [];
+
     function namesCategory(items) {
         let names = document.getElementById("categoryName")
         let htmlContentToAppend = ` <h1>${items.catName}</h1>
@@ -13,10 +16,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showCategory(itemsArray) {
+        this.productsArray = itemsArray;
         let htmlContentToAppend = "";
         for (let i = 0; i < itemsArray.length; i++) {
             htmlContentToAppend += `
-                <div class="list-group-item list-group-item-action cursor-active">
+                <div onclick="addProduct(${itemsArray[i].id})" class="list-group-item list-group-item-action cursor-active">
                     <div class="row">
                         <div class="col-3">
                             <img src="${itemsArray[i].image}" alt="${itemsArray[i].description}" class="img-thumbnail">
@@ -113,19 +117,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    document.getElementById("containerItems").addEventListener('click', () => {
-        fetch(URL_PRODUCTS)
-            .then(res => res.json())
-            .then(data => {
-                let productArray = data.products;
-                productArray.forEach(element => {
-                    let productID = element.id;
-                    console.log(productID)
-                    localStorage.setItem("productID", productID);
-                    //window.location = "products-info.html"
-                });
-            })
-    })
+    // document.getElementById("containerItems").addEventListener('click', () => {
+    //     fetch(URL_PRODUCTS)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             let productArray = data.products;
+    //             productArray.forEach(element => {
+    //                 let productID = element.id;
+    //                 console.log(productID)
+    //                 localStorage.setItem("productID", productID);
+    //                 //window.location = "products-info.html"
+    //             });
+    //         })
+    // })
 
     fetch(URL_PRODUCTS)
         .then(res => res.json())
@@ -139,3 +143,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 })
 
+/**
+ * Metodo que guarda id de producto seleccionado en localstorage
+ * */
+function addProduct(idProduct){
+    productsArray.forEach(element => {
+       if(element.id == idProduct){
+           localStorage.setItem("productId",element.id);
+       }
+    });
+}
