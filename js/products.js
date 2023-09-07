@@ -112,6 +112,21 @@ document.addEventListener("DOMContentLoaded", function () {
         showCategory(itemsArray);
     });
 
+
+    document.getElementById("containerItems").addEventListener('click', () => {
+        fetch(URL_PRODUCTS)
+            .then(res => res.json())
+            .then(data => {
+                let productArray = data.products;
+                productArray.forEach(element => {
+                    let productID = element.id;
+                    console.log(productID)
+                    localStorage.setItem("productID", productID);
+                    //window.location = "products-info.html"
+                });
+            })
+    })
+
     fetch(URL_PRODUCTS)
         .then(res => res.json())
         .then(data => {
