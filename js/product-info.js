@@ -1,38 +1,35 @@
-/*document.addEventListener("DOMContentLoaded", function () {
-let productID = localStorage.getItem("productID");
-const URL_PRODUCTS = "https://japceibal.github.io/emercado-api/cats_products/" + productID + ".json";
-let itemsArray = [];
-
-function showCategory(itemsArray) {
-    let htmlContentToAppend = "";
-    for (let i = 0; i < itemsArray.length; i++) {
+document.addEventListener('DOMContentLoaded', () => {
+    let idProduct = localStorage.getItem("IdProduct");
+    let URL_ID_PRODUCTS = "https://japceibal.github.io/emercado-api/products/" + idProduct + ".json";
+    localStorage.removeItem("IdProduct");
+        
+    function showProduct(product) {
+        let htmlContentToAppend = "";
         htmlContentToAppend += `
-            <div class="list-group-item list-group-item-action cursor-active">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${itemsArray[i].image}" alt="${itemsArray[i].description}" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${itemsArray[i].name} - ${itemsArray[i].currency}  ${itemsArray[i].cost}</h4>
-                            <small class="text-muted">${itemsArray[i].soldCount} artículos</small>
-                        </div>
-                        <p class="mb-1">${itemsArray[i].description}</p>
-                    </div>
-                </div>
+        <main class="pb-5">
+            <div class="text-center p-4">
+                <h2>${product.name}</h2><br><br><hr>
             </div>
-            `
-    }
+                <div class="row">
+                    <h4>Precio</h4> 
+                        <p class="mb-1">${product.currency}  ${product.cost}</p><br><br>
+                    <h4>Descripción</h4> 
+                        <p class="mb-1">${product.description}</p><br><br>
+                    <h4>Categoría</h4> 
+                        <p class="mb-1">${product.category}</p><br><br>
+                    <h4>Cantidad de vendidos</h4> 
+                        <p class="mb-1">${product.soldCount}</p><br><br>
+                    <h4>Imágenes ilustrativas</h4> 
+                        <img src="${product.images[1]}"class="img-thumbnail">
+                </div>
+            `;
 
-    document.getElementById("containerItemsInfo").innerHTML = htmlContentToAppend;
-}
+        document.getElementById("containerItems").innerHTML = htmlContentToAppend;
+    };
 
-fetch(URL_PRODUCTS)
+
+    fetch(URL_ID_PRODUCTS)
         .then(res => res.json())
-        .then(data => {
-            itemsArray = data.products;
-            showCategory(itemsArray);
+        .then(data => showProduct(data));
 
-        });
-})
-*/
+});

@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let nameCat = "";
 
     //Array que contiene elementos obtenidos de api (fetch)
-    let productsArray = [];
+    //let productsArray = [];
 
     function namesCategory(items) {
         let names = document.getElementById("categoryName")
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let htmlContentToAppend = "";
         for (let i = 0; i < itemsArray.length; i++) {
             htmlContentToAppend += `
-                <div onclick="addProduct(${itemsArray[i].id})" class="list-group-item list-group-item-action cursor-active">
+                <div onclick="setProductId(${itemsArray[i].id})" class="list-group-item list-group-item-action cursor-active">
                     <div class="row">
                         <div class="col-3">
                             <img src="${itemsArray[i].image}" alt="${itemsArray[i].description}" class="img-thumbnail">
@@ -116,21 +116,6 @@ document.addEventListener("DOMContentLoaded", function () {
         showCategory(itemsArray);
     });
 
-
-    // document.getElementById("containerItems").addEventListener('click', () => {
-    //     fetch(URL_PRODUCTS)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             let productArray = data.products;
-    //             productArray.forEach(element => {
-    //                 let productID = element.id;
-    //                 console.log(productID)
-    //                 localStorage.setItem("productID", productID);
-    //                 //window.location = "products-info.html"
-    //             });
-    //         })
-    // })
-
     fetch(URL_PRODUCTS)
         .then(res => res.json())
         .then(data => {
@@ -143,13 +128,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 })
 
-/**
- * Metodo que guarda id de producto seleccionado en localstorage
- * */
-function addProduct(idProduct){
-    productsArray.forEach(element => {
-       if(element.id == idProduct){
-           localStorage.setItem("productId",element.id);
-       }
-    });
+
+function setProductId(id) {
+    localStorage.setItem("IdProduct", id);
+    window.location = "product-info.html";
 }
+
