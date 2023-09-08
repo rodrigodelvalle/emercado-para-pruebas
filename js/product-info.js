@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let idProduct = localStorage.getItem("IdProduct");
     let URL_ID_PRODUCTS = "https://japceibal.github.io/emercado-api/products/" + idProduct + ".json";
     localStorage.removeItem("IdProduct");
-        
+
     function showProduct(product) {
         let htmlContentToAppend = "";
         htmlContentToAppend += `
@@ -20,10 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h4>Cantidad de vendidos</h4> 
                         <p class="mb-1">${product.soldCount}</p><br><br>
                     <h4>Imágenes ilustrativas</h4> 
-                        <img src="${product.images[1]}"class="img-thumbnail">
-                </div>
             `;
-
+        product.images.forEach(imagen => {
+            htmlContentToAppend += `
+                <div class="col">
+                        <img src="${imagen}" class="img-thumbnail">
+                </div>
+                `;
+        });
+        htmlContentToAppend += `
+                    </div>
+                </main>
+            `;
         document.getElementById("containerItems").innerHTML = htmlContentToAppend;
     };
 
