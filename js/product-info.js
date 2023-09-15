@@ -73,10 +73,65 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("containerItemsInfo").innerHTML = htmlContentToAppend;
     }
 
+    //Desafiate 
+
+    let boton = document.getElementById("enviar"); //id del boton
+
+    boton.addEventListener("click", function () { //funcion que se utiliza para añadir el comentario 
+       let estrellas = "";
+       let iconEstrella = '<i class="fas fa-star" style="color: #ffc800;"></i>';
+       let icoNoEstrella = '<i class="far fa-star" style="color: #ffc800;"></i>';
+       let total = 5;    
+       let commentarie1 = document.getElementById("floatingTextarea2");
+       let score = document.getElementById("select");
+       let nom1 = localStorage.getItem("username");
+       let fecha = dates ();
+       let htmlContentToAppend = "";
+       let data2 = { user: nom1, estrellas: score.value, dateTime: fecha , description: commentarie1.value}
+       for (let j = 1; j <= total; j++) {
+        if (j <= data2.estrellas) {
+          estrellas += iconEstrella;
+        } else 
+          estrellas += icoNoEstrella;
+        }
+      
+      htmlContentToAppend += `
+      <div>
+          <div>
+          <div id="coment">
+              <div class="d-flex w-100 justify-content-between">
+              <p class="mb-1">${data2.user}&#160 &#160${estrellas}</p>
+                  <p class="mb-1">${data2.dateTime} </p>
+              </div>
+              <br>
+              <p class="mb-1">${data2.description}</p>
+          </div> 
+      </div>    
+      </div>
+     
+  ` 
+  document.getElementById("containerItemsInfo").innerHTML += htmlContentToAppend;
+
+  //limpiar 
+ commentarie1.value= "";
+ score.value="";
+
+    });
+     
+//funcion para la fecha 
+    function dates(){
+        let date= new Date();
+        let current_date = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+        let current_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        let dateTime = current_date + " " + current_time; 
+        return dateTime; 
+        }
+
+
     fetch(PRODUCT_INFO_COMMENTS_URL)
     .then(res => res.json())
     .then(data => {
-        showComments(data);
+        showComments(data);  
     });
 
     
@@ -84,4 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(res => res.json())
         .then(data => showProduct(data));
 
+        
 });
+
+
+
+ 
