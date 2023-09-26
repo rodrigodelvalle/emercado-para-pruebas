@@ -70,4 +70,4 @@ if ((typeof sessionStorage !== 'undefined') || (typeof localStorage !== 'undefin
   console.log('El navegador no admite sessionStorage ni localStorage.');
 }
 
-document.getElementById("logueduser").innerHTML = localStorage.getItem("username");
+document.getElementById("logueduser").innerHTML =   localStorage.getItem("username") || sessionStorage.getItem("username");
