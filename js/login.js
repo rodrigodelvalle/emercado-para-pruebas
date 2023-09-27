@@ -2,8 +2,9 @@
 window.onload = function() {
     document.getElementById("loginForm").addEventListener("submit", function(event) {
         event.preventDefault(); // Prevenir el envío del formulario
-        localStorage.clear();
         
+        localStorage.clear();
+
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
         let rememberMe = document.getElementById("remember").checked;
