@@ -61,6 +61,42 @@ function showProduct(product) {
     document.getElementById("containerItemsInfoProduct").innerHTML = htmlContentToAppend;
 };
 
+function showRelatedProducts() {
+    let idProduct = localStorage.getItem("IdProduct");
+    let catID = localStorage.getItem("catID");
+    let URL = "https://japceibal.github.io/emercado-api/cats_products/" + catID + ".json";
+
+    fetch(URL)
+        .then(res => res.json())
+        .then(data => {
+            let content = "";
+            let productosMostrados = 4;
+            for (let i = 0; i < productosMostrados && i < data.products.length; i++) {
+                let product = data.products[i];
+                if (parseInt(idProduct) !== product.id) {
+                    content += `
+                        <div class="card" style="width: 18rem; cursor: pointer; display: inline-block">
+                            <div onclick="setProductId(${product.id})"">
+                                <img src="${product.image}" class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${product.name}</h5>
+                                    </div>
+                            </div>    
+                        </div>               
+                    `;
+                }
+            }
+            document.getElementById("productsRelated").innerHTML = content;
+        })
+        .catch(error => {
+            console.error("Error al cargar los productos relacionados:", error);
+        })
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    showRelatedProducts();
+});
+
 function showComments(itemsArray) {
     let divComent = document.getElementById("containerItemsInfo")
     const iconEstrella = '<i class="fas fa-star" style="color: #ffc800;"></i>';
