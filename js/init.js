@@ -39,6 +39,7 @@ let getJSONData = function(url){
         return result;
       });
 }
+
 const botonCambiar = document.getElementById("cambiarModo"); //const del boton del nav
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -79,10 +80,8 @@ document.getElementById("logueduser").innerHTML = localStorage.getItem("username
   botonCambiar.classList.toggle('active');
   let nav = document.getElementById("navIndex")
   let check = nav.toggleAttribute('data-bs-theme')
+
   if(check){
-      nav.setAttribute('data-bs-theme', 'dark')
-  }
-  if(nav.hasAttribute('data-bs-theme')){
       localStorage.setItem('mode', 'dark')
   }else{
       localStorage.setItem('mode', 'light')
