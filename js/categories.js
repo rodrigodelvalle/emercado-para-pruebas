@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         nav.setAttribute('data-bs-theme', 'dark')
         
     }
-    if(mode === 'light' || !mode ){
+    if(mode === 'light' || !mode){
         nav.removeAttribute('data-bs-theme')
         nav.classList.remove('bg-body-tertiary')
         nav.setAttribute('style','background-color: rgba(255, 192, 74, 0.684);')

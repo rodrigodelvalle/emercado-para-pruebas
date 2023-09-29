@@ -47,19 +47,36 @@ function showProduct(product) {
                     <p class="mb-1">${product.soldCount}</p><br><br>
                 <h4>Imágenes ilustrativas</h4> 
         `;
-    product.images.forEach(imagen => {
-        htmlContentToAppend += `
-            <div class="col">
-                    <img src="${imagen}" class="img-thumbnail">
-            </div>
-            `;
-    });
-    htmlContentToAppend += `
+
+        let carrusel = document.getElementById("carrusel");
+        let htmlContentToAppend2 = "";
+        
+            htmlContentToAppend2 += `
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                        <img src="${product.images[0]}" class="d-block w-100" >
                 </div>
-            </main>
+                <div class="carousel-item ">
+                <img src="${product.images[1]}" class="d-block w-100" >
+                </div>
+               <div class="carousel-item ">
+             <img src="${product.images[2]}" class="d-block w-100" >
+            </div>
+            <div class="carousel-item ">
+            <img src="${product.images[3]}" class="d-block w-100" >
+               </div>
+                </div>
+                `;
+
+        htmlContentToAppend += `
+            </div>
+        </div>
         `;
-    document.getElementById("containerItemsInfoProduct").innerHTML = htmlContentToAppend;
-};
+         
+        document.getElementById("containerItemsInfoProduct").innerHTML = htmlContentToAppend;
+        carrusel.innerHTML = htmlContentToAppend2;
+
+    };
 
 function showComments(itemsArray) {
     let divComent = document.getElementById("containerItemsInfo")
