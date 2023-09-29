@@ -309,7 +309,7 @@ margin-bottom: 2%;
 }
 
 .active::after{
-  right: 0;
+  right: 0;|
   left: unset;
 }
 
