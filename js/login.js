@@ -5,7 +5,6 @@ window.onload = function() {
         
         localStorage.clear();
 
-
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
         let rememberMe = document.getElementById("remember").checked;
