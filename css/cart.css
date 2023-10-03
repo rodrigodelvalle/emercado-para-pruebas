@@ -1,0 +1,28 @@
+
+    #tablaCarrito {
+        border-collapse: collapse; 
+        width: 100%; /* Ancho de la tabla */
+      }
+      
+      #tablaCarrito img {
+        width: 70px; /* Tamaño imagen */
+        vertical-align: middle;
+      }
+      
+      #tablaCarrito td {
+        padding: 12px; /* Espacio interno en las celdas */
+        text-align: center; 
+      }
+      
+      #tablaCarrito th {
+        text-align: center; 
+      }
+      
+      /* Agregar espacio entre filas si es necesario */
+      #tablaCarrito tbody tr {
+        margin-bottom: 10px; /* Espacio entre filas */
+      }
+
+    #inputCart{
+        text-align: center;
+    }
