@@ -29,6 +29,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
 });
+
+
+let arrayProductos = [];
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("comprar").addEventListener("click", () => {
+        let idProduct = localStorage.getItem("IdProduct");
+        let URL = "https://japceibal.github.io/emercado-api/products/" + idProduct + ".json"
+        fetch(URL)
+            .then(res => res.json())
+            .then(data => {
+               arrayProductos= JSON.parse(localStorage.getItem('arrayProductos'));
+                arrayProductos.push(data);
+                localStorage.setItem('arrayProductos', JSON.stringify(arrayProductos));
+                console.log(arrayProductos);
+            });
+            
+    });
+})
+
 function showProduct(product) {
     let htmlContentToAppend = "";
     htmlContentToAppend += `
