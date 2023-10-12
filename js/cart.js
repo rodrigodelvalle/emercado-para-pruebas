@@ -66,7 +66,7 @@ function mostrarLista() {
         <td scope="row"><img class="img-fluid" src="${arrayProductos[i].images[0]}"></img></td>
         <td>${arrayProductos[i].name}</td>
         <td>${arrayProductos[i].currency} ${arrayProductos[i].cost}</td>
-        <td class="col"><input class="inputCart" type="number" min="1" class="form-control w-50 mx-auto"></td>
+        <td class="col"><input id="inputCart" type="number" min="1" class="form-control w-50 mx-auto" value="1"></td>
         <td><b>${arrayProductos[i].currency} ${arrayProductos[i].cost}</b></td>
       </tr>
     `;
