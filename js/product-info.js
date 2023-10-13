@@ -46,6 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .then(data => {
                     let arrayProductos = JSON.parse(localStorage.getItem('arrayProductos')) || [];
+                    
+            
                     // Verificar si el producto ya está en el carrito 
                     const productExists = arrayProductos.some(product => product.id === data.id);
                     if (!productExists) {
@@ -58,6 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                           })
                     }
+
+
                 })
                 .catch(error => {
                     console.error(error);
