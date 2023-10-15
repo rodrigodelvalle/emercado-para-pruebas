@@ -134,9 +134,9 @@ function showRelatedProducts() {
             let productosMostrados = 4;
             for (let i = 0; i < productosMostrados && i < data.products.length; i++) {
                 let product = data.products[i];
-                if (parseInt(idProduct) !== product.id) {
+                if (parseInt(idProduct) !== product.id) {   //Se modifico a style="width: 30vw; para el content //
                     content += `
-                        <div class="card" style="width: 18rem; cursor: pointer; display: inline-block">
+                        <div class="card" style="width: 30vw; cursor: pointer; display: inline-block"> 
                             <div onclick="setProductId(${product.id})"">
                                 <img src="${product.image}" class="card-img-top">
                                     <div class="card-body">

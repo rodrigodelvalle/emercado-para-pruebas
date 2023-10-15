@@ -401,6 +401,9 @@ margin-left: 400px;
   #escritura_de_comentario {
     font-size: 100vw;
   }
+  #productsRelated .card-body .card-title {
+    font-size: 2vw;
+    }
 }
 
 @media (min-width: 901px) {             /* Formato para texto en resposive desing para tamaño mayor a 900px */
@@ -439,6 +442,9 @@ margin-left: 400px;
   }
   #escritura_de_comentario {
     font-size: 1vh;
+  }
+  #productsRelated .card-body .card-title {
+  font-size: 2vh;
   }
 }
 .nav-item , .navbar-brand{
