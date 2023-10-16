@@ -46,6 +46,7 @@
         </div>
     </div>
 </nav>
+
   <main>
     <div class="container">
       <h1 class="text-center p-4" >Carrito de compras</h1>
@@ -72,42 +73,65 @@
 
       </div>
   </main>
-
   <div id="formEnvio">
-    <form>
+    <div>
       <h4 id="h4form"> <strong> Tipo de envío </strong> </h4>
       <br>
       <p>
-        <input type="radio" name="env" value="p" required> Premium (2 a 5 días - 15%)
+        <input id="premium" type="radio" name="env" value="p" required> Premium (2 a 5 días - 15%)
         <br>
-        <input type="radio" name="env" value="e" required> Express (5 a 8 días - 7%)
+        <input id="expres" type="radio" name="env" value="e" required> Express (5 a 8 días - 7%)
         <br>
-        <input type="radio" name="env" value="es" required> Estándar (12 a 15 días - 5%)
+        <input id="estandar" type="radio" name="env" value="es" required> Estándar (12 a 15 días - 5%)
       </p>
       <p> <strong>¿Debemos envolver tu compra como un obsequio? </strong> </p>
      <div class="mb-3 form-check">
-       <input type="checkbox" class="form-check-input" id="exampleCheck1">
+       <input type="checkbox" class="form-check-input" >
        <p> Si, la compra es un obsequio y será enviada a su destinatario. </p>
       </div>
       <div class="mb-3">
         <h5> Datos de envío</h5>
         <label for="exampleInputEmail1" class="form-label">Calle:</label>
-        <input type="text" class="form-control" id="exampleInput" aria-describedby="emailHelp">
+        <input id="exampleInputEmail1" type="text" class="form-control"  aria-describedby="emailHelp">
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Número</label>
-        <input type="number" class="form-control" id="exampleInput">
+        <input id="exampleInputPassword1" type="number" class="form-control" >
       </div>
       <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Esquina</label>
-        <input type="text" class="form-control" id="exampleInput">
+        <label for="exampleInputPassword2" class="form-label">Esquina</label>
+        <input id="exampleInputPassword2" type="text" class="form-control" >
       </div>
-     
-      <button id="btnEnviar" type="submit" class="btn btn-primary">Enviar</button>
-    </form>
+    </div>
 
   </div>
 
+  <br>
+
+  <hr>
+    <h3 id="costos">Costos</h3>
+  <div class="container" id="containerCostos">
+  
+  <ul class="list-group">
+    <div class="list-group-item ">
+      <div class="d-flex justify-content-between">
+        <span>Subtotal</span> <small id="totalForm"></small>
+      </div>
+      <small>Costo unitario del producto por cantidad</small>
+    </div>
+     
+    <div class="list-group-item ">
+      <div class="d-flex justify-content-between">
+        <span>Costo de envio</span> <small id="envio"></small>
+      </div>
+      <small>Según el tipo de envio</small>
+    </div>
+    <div class="list-group-item d-flex justify-content-between">
+       <p>Total ($)</p>  <p id="precioFinal" class="font-weight-bold"></p>
+      
+    </div>
+  </ul>
+  </div>
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
