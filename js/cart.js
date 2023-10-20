@@ -135,6 +135,84 @@ function sumaDePrecios(){
   })
 
 }
+// Funcion para mostrar el modal compras//
+document.getElementById('openModal').addEventListener('click', function() {
+  document.getElementById('paymentModal').style.display = 'block';
+});
+
+document.getElementById('closeModal').addEventListener('click', function() {
+  document.getElementById('paymentModal').style.display = 'none';
+});
+
+document.getElementById('paymentMethod').addEventListener('change', function() {
+  var selectedMethod = this.value;
+
+  document.getElementById('creditCardDetails').classList.add('hidden');
+  document.getElementById('bankTransferDetails').classList.add('hidden');
+
+  if (selectedMethod === 'tarjeta') {
+      document.getElementById('creditCardDetails').classList.remove('hidden');
+      document.getElementById('cardNumber').disabled = false;
+      document.getElementById('expirationDate').disabled = false;
+      document.getElementById('codigoSeguridad').disabled = false;
+      document.getElementById('bankAccount').disabled = true;
+  } else if (selectedMethod === 'transferencia') {
+      document.getElementById('bankTransferDetails').classList.remove('hidden');
+      document.getElementById('cardNumber').disabled = true;
+      document.getElementById('expirationDate').disabled = true;
+      document.getElementById('codigoSeguridad').disabled = true;
+      document.getElementById('bankAccount').disabled = false;
+  }
+});
+
+document.getElementById('paymentForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  // Recopila los datos del formulario
+  var paymentMethod = document.getElementById('paymentMethod').value;
+  var cardNumber = document.getElementById('cardNumber').value;
+  var expirationDate = document.getElementById('expirationDate').value;
+  var bankAccount = document.getElementById('bankAccount').value;
+  var codigoSeguridad = document.getElementById('codigoSeguridad').value;
+
+ 
+ 
+var alertText = ''; // Inicializamos una cadena vacía para almacenar el texto de la alerta
+
+if (paymentMethod) {
+    alertText += `<p><strong>Método de Pago:</strong> ${paymentMethod}</p>`;
+}
+
+if (cardNumber) {
+    alertText += `<p><strong>Número de Tarjeta:</strong> ${cardNumber}</p>`;
+}
+
+if (expirationDate) {
+    alertText += `<p><strong>Fecha de Vencimiento:</strong> ${expirationDate}</p>`;
+}
+
+if (bankAccount) {
+    alertText += `<p><strong>Número de cuenta:</strong> ${bankAccount}</p>`;
+}
+if (codigoSeguridad){
+  alertText += `<p><strong>Código Seguridad:</strong> ${codigoSeguridad}</p>`;
+}
+
+
+// Mostrar la alerta solo si hay datos para mostrar
+if (alertText) {
+    Swal.fire({
+        icon: 'success',
+        title: 'Datos de pago guardados',
+        html: alertText
+    });
+}
+
+
+
+  // Cierra el modal
+  document.getElementById('paymentModal').style.display = 'none';
+});
 
 
 

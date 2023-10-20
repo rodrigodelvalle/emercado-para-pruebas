@@ -72,7 +72,6 @@
         
 
       </div>
-  </main>
   <div id="formEnvio">
     <div>
       <h4 id="h4form"> <strong> Tipo de envío </strong> </h4>
@@ -128,10 +127,46 @@
     </div>
     <div class="list-group-item d-flex justify-content-between">
        <p>Total ($)</p>  <p id="precioFinal" class="font-weight-bold"></p>
-      
     </div>
   </ul>
   </div>
+  <!--Formas de pago-->
+  <br>
+  <hr>
+  <div class="container text-center">
+  <h3>Forma de pago</h3><br>
+  <br>
+  <button id="openModal" class="btn btn-success">Seleccionar</button>
+  <div id="paymentModal" class="modal">
+      <div class="modal-content">
+          <span class="close" id="closeModal"><abbr title="Cerrar ventana">&times;</abbr></span>
+          <h2>Seleccionar Forma de Pago</h2>
+          <form id="paymentForm">
+              <label for="paymentMethod">Método de Pago:</label>
+              <select id="paymentMethod" name="paymentMethod">
+                  <option value="tarjeta">Tarjeta de Crédito</option>
+                  <option value="transferencia">Transferencia Bancaria</option>
+              </select>
+              <div id="creditCardDetails" class="hidden">
+                  
+                  <label for="cardNumber">Número de Tarjeta:</label>
+                  <input type="text" id="cardNumber" name="cardNumber">
+                  <label for="expirationDate" >Fecha de Vencimiento:</label>
+                  <input type="text" size=40 style="width:100px" id="expirationDate" name="expirationDate" placeholder="MM/AA">
+                  <label for="codigoSeguridad">Código de seguridad</label>
+                  <input type="text" id="codigoSeguridad" name="codigoSeguridad">
+              </div>
+            
+              <div id="bankTransferDetails" class="hidden">
+                  <label for="bankAccount">Cuenta Bancaria:</label>
+                  <input type="text" id="bankAccount" name="bankAccount">
+              </div>
+              <input type="submit" value="Confirmar">
+          </form>
+      </div>
+  </div>
+</div>
+  </main>
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -152,6 +187,7 @@
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/product-info.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
