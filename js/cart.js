@@ -71,44 +71,120 @@ function mostrarLista() {
     document.getElementById("productosCart").innerHTML += content;
   }
 }
+function convertirAUSD(precio, currency) {
+  if (currency === 'UYU'){
+  const tasaCambio = 0.0243; // La tasa de cambio real 
+  return parseFloat(precio) * tasaCambio;
+} else {
+  return parseFloat(precio);
+} }
 
 function recalcular() {
   let cantidades = document.getElementsByClassName('cant'); 
   let precios = document.getElementsByClassName('precio');
   let preciosTotales = document.getElementsByClassName('res');
-  let sumaFinal = document.getElementById('totalForm')
-  let sumaTotal = 0
+  let sumaFinal = document.getElementById('totalForm');
+  let sumaTotal = 0;
+
   for (let i = 0; i < cantidades.length; i++) {
     let cantidad = parseInt(cantidades[i].value);
-    let precio = parseFloat(precios[i].textContent.replace(/\D/g, '')); //busca todos los caracteres que no son dígitos ni puntos.
-    let currencySymbol = precios[i].textContent.replace(/[^A-Z]/g, ''); // Obtener símbolo de la currency busca y reemplaza cualquier carácter que no sea una letra mayúscula por una cadena vacía. Esto extrae el símbolo de la moneda.
+    let precio = convertirAUSD(precios[i].textContent.replace(/\D/g, ''), precios[i].textContent.split(' ')[0]); // Obtener la moneda 
     let precioTotal = cantidad * precio;
-    sumaTotal += precioTotal 
-    precioTotal = Math.floor(precioTotal); // Este metodo redondea el nro para que no aparezcan los decimales.
-     preciosTotales[i].innerHTML = "<b>" + currencySymbol + " " + precioTotal + "</b>";
-    sumaFinal.innerHTML = currencySymbol + " " + sumaTotal;
-    
+    sumaTotal += precioTotal;
+    precioTotal = Math.floor(precioTotal);
+    preciosTotales[i].innerHTML = "<b>USD " + precioTotal + "</b>"; // Siempre muestra en USD
   }
-}  
 
-function sumaDePrecios(){
+  sumaFinal.innerHTML = "USD " + sumaTotal.toFixed(2); // Muestra el subtotal en USD
+}
+
+function sumaDePrecios() {
+  let cantidades = document.getElementsByClassName('cant'); 
+  let precios = document.getElementsByClassName('precio');
+  let sumaFinal = document.getElementById('totalForm');
+  let precioFinal = document.getElementById('precioFinal');
+  let sumaTotal = 0;
+
+  for (let i = 0; i < cantidades.length; i++) {
+    let valorUSD = convertirAUSD(precios[i].textContent.replace(/\D/g, ''), precios[i].textContent.split(' ')[0]);
+    let cantidad = parseInt(cantidades[i].value);
+    let currencySymbol = precios[i].textContent.split(' ')[0];
+    let precioTotal = cantidad * valorUSD;
+    sumaTotal += precioTotal;
+  }
+
+  sumaFinal.innerHTML = "USD " + sumaTotal;
+
+  function actualizarSubtotal() {
+    let subtotal = 0;
+
+    for (let i = 0; i < cantidades.length; i++) {
+      let valorUSD = convertirAUSD(precios[i].textContent.replace(/\D/g, ''), precios[i].textContent.split(' ')[0]);
+      let cantidad = parseInt(cantidades[i].value);
+      subtotal += cantidad * valorUSD;
+    }
+
+    return subtotal;
+  }
+
+  function actualizarPrecioFinal() {
+    let subtotal = actualizarSubtotal();
+    let premium = document.getElementById("premium");
+    let expres = document.getElementById("expres");
+    let estandar = document.getElementById("estandar");
+    let envio = 0;
+
+    if (premium.checked) {
+      envio = subtotal * 0.15;
+    } else if (expres.checked) {
+      envio = subtotal * 0.07;
+    } else if (estandar.checked) {
+      envio = subtotal * 0.05;
+    }
+
+    let total = subtotal + envio;
+
+    // Actualizar los elementos HTML
+    let sumaFinal = document.getElementById('totalForm');
+    let precioFinal = document.getElementById('precioFinal');
+    let valorEnvio = document.getElementById('envio');
+
+    sumaFinal.innerHTML = "USD " + subtotal.toFixed(2);
+    precioFinal.innerHTML = "<b>USD " + total.toFixed(2) + "</b";
+    valorEnvio.innerHTML = "USD " + envio.toFixed(2);
+  }
+
+  // Escuchar cambios en las cantidades en tiempo real
+  for (let i = 0; i < cantidades.length; i++) {
+    cantidades[i].addEventListener('input', () => {
+      actualizarPrecioFinal();
+    });
+  }
+
+  // Escuchar cambios en las opciones de envío
   let premium = document.getElementById("premium");
   let expres = document.getElementById("expres");
   let estandar = document.getElementById("estandar");
-  let cantidades = document.getElementsByClassName('cant'); 
-  let precios = document.getElementsByClassName('precio');
-  let sumaFinal = document.getElementById('totalForm')
-  let precioFinal = document.getElementById('precioFinal')
-  let sumaTotal = 0
 
-  for (let i = 0; i < cantidades.length; i++) {
-    let cantidad = parseInt(cantidades[i].value);
-    let precio = parseFloat(precios[i].textContent.replace(/\D/g, ''));
-    let currencySymbol = precios[i].textContent.replace(/[^A-Z]/g, ''); 
-    let precioTotal = cantidad * precio;
-    sumaTotal += precioTotal 
-    sumaFinal.innerHTML =  currencySymbol + " " + sumaTotal ;
-  }
+  premium.addEventListener('click', () => {
+    actualizarPrecioFinal();
+  });
+
+  expres.addEventListener('click', () => {
+    actualizarPrecioFinal();
+  });
+
+  estandar.addEventListener('click', () => {
+    actualizarPrecioFinal();
+  });
+
+  // Inicializar el precio final y subtotal
+  actualizarPrecioFinal();
+}
+
+// Llama a la función para inicializar todo
+sumaDePrecios();
+
   premium.addEventListener('click', ()=>{
     let valorEnvio = document.getElementById('envio');
     let envioPremium = sumaTotal*0.15;
@@ -134,7 +210,6 @@ function sumaDePrecios(){
     precioFinal.innerHTML = "<b>"+"USD " +total.toFixed(2)+"</b>";
   })
 
-}
 // Funcion para mostrar el modal compras//
 document.getElementById('openModal').addEventListener('click', function() {
   document.getElementById('paymentModal').style.display = 'block';
