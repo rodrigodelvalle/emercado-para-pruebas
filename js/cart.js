@@ -47,6 +47,7 @@ function showCartInfo(data) {
       <td class="precio">${data.currency} ${data.unitCost}</td>
       <td class="col"><input id="inputCart" type="number" min="1" class="cant form-control w-50 mx-auto" value="${data.count}"></td>
       <td class="res"><b>${data.currency} ${data.unitCost}</b></td>
+      <td><button id="rodri" class="delete-item-btn"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
     </tr>
   `;
   document.getElementById("productosCart").innerHTML = htmlContentToAppend;
@@ -65,11 +66,35 @@ function mostrarLista() {
           <td class="precio">${arrayProductos[i].currency} ${arrayProductos[i].cost}</td>
           <td class="col"><input type="number" min="1" class="cant form-control w-50 mx-auto inputCart" value="1"></td>
           <td class="res"><b>${arrayProductos[i].currency} ${arrayProductos[i].cost}</b></td>
+          <td><button id=${arrayProductos[i].name} class="delete-btn" data-index="${i}"><i class="fa fa-trash" aria-hidden="true"></i></button></td> 
         </tr>
       `;
-    }
+    } //se agregó el id=${arrayProductos[i].name arriba//
     document.getElementById("productosCart").innerHTML += content;
+    // Evento para boton de borrar productos del carrito
+    var deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {                     //function(button)
+      button.addEventListener('click', function(event) {
+        //alert('funciona')
+        
+        //var index = event.target.id; 
+        //alert(event.target.id)
+        //alert(index)
+        // 1. Obtén el array
+        var arrayProductos = JSON.parse(localStorage.getItem('arrayProductos'));
+        // 2. Filtra la matriz para excluir el objeto con el "name" especificado
+        var nuevoArray = arrayProductos.filter(function(producto) {
+          alert(event.target.id)
+          return producto.name !== event.target.id;  // Agregar a nuevoArray si no es el index (id)
+        });
+
+        // 3. Guarda la nueva matriz en localStorage
+        localStorage.setItem('arrayProductos', JSON.stringify(nuevoArray));
+
+        mostrarLista();
   }
+  )})
+}
 }
 function convertirAUSD(precio, currency) {
   if (currency === 'UYU'){
@@ -290,4 +315,11 @@ if (alertText) {
 });
 
 
+// función para eliminar elementos del carrito
+//function eliminarProducto() {
+  //const foundId = arrayProductos.find((element) => element.id);
+  //let carrito = JSON.parse(localStorage.getItem('arrayProductos'))
 
+  //console.log(carrito)
+  //arrayProductos = arrayProductos.filter()
+//}
