@@ -66,7 +66,7 @@ function mostrarLista() {
           <td class="precio">${arrayProductos[i].currency} ${arrayProductos[i].cost}</td>
           <td class="col"><input type="number" min="1" class="cant form-control w-50 mx-auto inputCart" value="1"></td>
           <td class="res"><b>${arrayProductos[i].currency} ${arrayProductos[i].cost}</b></td>
-          <td><button id=${arrayProductos[i].name} class="delete-btn" data-index="${i}"><i class="fa fa-trash" aria-hidden="true"></i></button></td> 
+          <td><button id=${arrayProductos[i].name} class="delete-btn" data-index="${i}"><i class="fa fa-trash" aria-hidden="true" onclick="borracion(${i})"></i></button></td> 
         </tr>
       `;
     } //se agregó el id=${arrayProductos[i].name arriba//
@@ -98,10 +98,10 @@ function mostrarLista() {
 }
 function borracion(index) {
   alert(index)
-  //var obtenidoDeLocalStorage = JSON.parse(localStorage.getItem('arrayProductos'))
-  //obtenidoDeLocalStorage.splice(index,1)
-  //localStorage.setItem('arrayProductos', JSON.stringify(obtenidoDeLocalStorage))
-  //mostrarLista()
+  var obtenidoDeLocalStorage = JSON.parse(localStorage.getItem('arrayProductos'))
+  obtenidoDeLocalStorage.splice(index,1)
+  localStorage.setItem('arrayProductos', JSON.stringify(obtenidoDeLocalStorage))
+  mostrarLista()
 
 }
 
