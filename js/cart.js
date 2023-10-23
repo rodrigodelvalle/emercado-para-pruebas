@@ -72,30 +72,39 @@ function mostrarLista() {
     } //se agregó el id=${arrayProductos[i].name arriba//
     document.getElementById("productosCart").innerHTML += content;
     // Evento para boton de borrar productos del carrito
-    var deleteButtons = document.querySelectorAll('.delete-btn');
-    deleteButtons.forEach(button => {                     //function(button)
-      button.addEventListener('click', function(event) {
+    //var deleteButtons = document.querySelectorAll('.delete-btn');
+    //deleteButtons.forEach(button => {                     //function(button)
+    //  button.addEventListener('click', function(event) {
         //alert('funciona')
         
         //var index = event.target.id; 
         //alert(event.target.id)
         //alert(index)
         // 1. Obtén el array
-        var arrayProductos = JSON.parse(localStorage.getItem('arrayProductos'));
+    //    var arrayProductos = JSON.parse(localStorage.getItem('arrayProductos'));
         // 2. Filtra la matriz para excluir el objeto con el "name" especificado
-        var nuevoArray = arrayProductos.filter(function(producto) {
-          alert(event.target.id)
-          return producto.name !== event.target.id;  // Agregar a nuevoArray si no es el index (id)
-        });
+    //    var nuevoArray = arrayProductos.filter(function(producto) {
+    //      alert(event.target.id)
+    //      return producto.name !== event.target.id;  // Agregar a nuevoArray si no es el index (id)
+    //    });
 
         // 3. Guarda la nueva matriz en localStorage
-        localStorage.setItem('arrayProductos', JSON.stringify(nuevoArray));
+    //    localStorage.setItem('arrayProductos', JSON.stringify(nuevoArray));
 
-        mostrarLista();
-  }
-  )})
+    //    mostrarLista();
+  //}
+  //)})
 }
 }
+function borracion(index) {
+  alert(index)
+  //var obtenidoDeLocalStorage = JSON.parse(localStorage.getItem('arrayProductos'))
+  //obtenidoDeLocalStorage.splice(index,1)
+  //localStorage.setItem('arrayProductos', JSON.stringify(obtenidoDeLocalStorage))
+  //mostrarLista()
+
+}
+
 function convertirAUSD(precio, currency) {
   if (currency === 'UYU'){
   const tasaCambio = 0.0243; // La tasa de cambio real 
