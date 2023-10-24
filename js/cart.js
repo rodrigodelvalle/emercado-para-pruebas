@@ -71,37 +71,14 @@ function mostrarLista() {
       `;
     } //se agregó el id=${arrayProductos[i].name arriba//
     document.getElementById("productosCart").innerHTML += content;
-    // Evento para boton de borrar productos del carrito
-    //var deleteButtons = document.querySelectorAll('.delete-btn');
-    //deleteButtons.forEach(button => {                     //function(button)
-    //  button.addEventListener('click', function(event) {
-        //alert('funciona')
-        
-        //var index = event.target.id; 
-        //alert(event.target.id)
-        //alert(index)
-        // 1. Obtén el array
-    //    var arrayProductos = JSON.parse(localStorage.getItem('arrayProductos'));
-        // 2. Filtra la matriz para excluir el objeto con el "name" especificado
-    //    var nuevoArray = arrayProductos.filter(function(producto) {
-    //      alert(event.target.id)
-    //      return producto.name !== event.target.id;  // Agregar a nuevoArray si no es el index (id)
-    //    });
 
-        // 3. Guarda la nueva matriz en localStorage
-    //    localStorage.setItem('arrayProductos', JSON.stringify(nuevoArray));
-
-    //    mostrarLista();
-  //}
-  //)})
 }
 }
-function borracion(index) {
-  alert(index)
-  var obtenidoDeLocalStorage = JSON.parse(localStorage.getItem('arrayProductos'))
-  obtenidoDeLocalStorage.splice(index,1)
+function borracion(index) {                                                                //Función que obtiene el array de productos actual, elimina el valor "index" proporcionado por la misma etiqueta como variable
+  var obtenidoDeLocalStorage = JSON.parse(localStorage.getItem('arrayProductos'))          //Posteriormente reemplaza el localstorage actual con el nuevo, luego elimina todos los valores de la etiqueta con id="productosCart"
+  obtenidoDeLocalStorage.splice(index,1)                                                   //Ejecuta la función mistrarLista() para volver a cargar los productos
   localStorage.setItem('arrayProductos', JSON.stringify(obtenidoDeLocalStorage))
-  //document.getElementById("productosCart").innerHTML -= document.getElementById("productosCart").getElementById("item"+index).innerHTML
+  document.getElementById("productosCart").innerHTML ="";
   mostrarLista()
 
 }
