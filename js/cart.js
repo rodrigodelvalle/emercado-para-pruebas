@@ -60,7 +60,7 @@ function mostrarLista() {
     let content = "";
     for (let i = 0; i < arrayProductos.length; i++) {
       content += `
-        <tr>
+        <tr id="item${i}">
           <td scope="row"><img class="img-fluid" src="${arrayProductos[i].images[0]}"></td>
           <td>${arrayProductos[i].name}</td>
           <td class="precio">${arrayProductos[i].currency} ${arrayProductos[i].cost}</td>
@@ -101,6 +101,7 @@ function borracion(index) {
   var obtenidoDeLocalStorage = JSON.parse(localStorage.getItem('arrayProductos'))
   obtenidoDeLocalStorage.splice(index,1)
   localStorage.setItem('arrayProductos', JSON.stringify(obtenidoDeLocalStorage))
+  //document.getElementById("productosCart").innerHTML -= document.getElementById("productosCart").getElementById("item"+index).innerHTML
   mostrarLista()
 
 }
