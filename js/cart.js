@@ -47,6 +47,7 @@ function showCartInfo(data) {
       <td class="precio">${data.currency} ${data.unitCost}</td>
       <td class="col"><input id="inputCart" type="number" min="1" class="cant form-control w-50 mx-auto" value="${data.count}"></td>
       <td class="res"><b>${data.currency} ${data.unitCost}</b></td>
+      <td><button id="rodri" class="delete-item-btn"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
     </tr>
   `;
   document.getElementById("productosCart").innerHTML = htmlContentToAppend;
@@ -59,18 +60,29 @@ function mostrarLista() {
     let content = "";
     for (let i = 0; i < arrayProductos.length; i++) {
       content += `
-        <tr>
+        <tr id="item${i}">
           <td scope="row"><img class="img-fluid" src="${arrayProductos[i].images[0]}"></td>
           <td>${arrayProductos[i].name}</td>
           <td class="precio">${arrayProductos[i].currency} ${arrayProductos[i].cost}</td>
           <td class="col"><input type="number" min="1" class="cant form-control w-50 mx-auto inputCart" value="1"></td>
           <td class="res"><b>${arrayProductos[i].currency} ${arrayProductos[i].cost}</b></td>
+          <td><button id=${arrayProductos[i].name} class="delete-btn" data-index="${i}"><i class="fa fa-trash" aria-hidden="true" onclick="borracion(${i})"></i></button></td> 
         </tr>
       `;
-    }
+    } //se agregó el id=${arrayProductos[i].name arriba//
     document.getElementById("productosCart").innerHTML += content;
-  }
+
 }
+}
+function borracion(index) {                                                                //Función que obtiene el array de productos actual, elimina el valor "index" proporcionado por la misma etiqueta como variable
+  var obtenidoDeLocalStorage = JSON.parse(localStorage.getItem('arrayProductos'))          //Posteriormente reemplaza el localstorage actual con el nuevo, luego elimina todos los valores de la etiqueta con id="productosCart"
+  obtenidoDeLocalStorage.splice(index,1)                                                   //Ejecuta la función mistrarLista() para volver a cargar los productos
+  localStorage.setItem('arrayProductos', JSON.stringify(obtenidoDeLocalStorage))
+  document.getElementById("productosCart").innerHTML ="";
+  mostrarLista()
+
+}
+
 function convertirAUSD(precio, currency) {
   if (currency === 'UYU'){
   const tasaCambio = 0.0243; // La tasa de cambio real 
@@ -290,4 +302,11 @@ if (alertText) {
 });
 
 
+// función para eliminar elementos del carrito
+//function eliminarProducto() {
+  //const foundId = arrayProductos.find((element) => element.id);
+  //let carrito = JSON.parse(localStorage.getItem('arrayProductos'))
 
+  //console.log(carrito)
+  //arrayProductos = arrayProductos.filter()
+//}
