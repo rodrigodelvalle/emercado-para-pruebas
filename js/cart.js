@@ -142,13 +142,13 @@ function sumaDePrecios() {
   function actualizarPrecioFinal() {
     let subtotal = actualizarSubtotal();
     let premium = document.getElementById("premium");
-    let expres = document.getElementById("expres");
+    let express = document.getElementById("express");
     let estandar = document.getElementById("estandar");
     let envio = 0;
 
     if (premium.checked) {
       envio = subtotal * 0.15;
-    } else if (expres.checked) {
+    } else if (express.checked) {
       envio = subtotal * 0.07;
     } else if (estandar.checked) {
       envio = subtotal * 0.05;
@@ -175,14 +175,14 @@ function sumaDePrecios() {
 
   // Escuchar cambios en las opciones de envío
   let premium = document.getElementById("premium");
-  let expres = document.getElementById("expres");
+  let express = document.getElementById("express");
   let estandar = document.getElementById("estandar");
 
   premium.addEventListener('click', () => {
     actualizarPrecioFinal();
   });
 
-  expres.addEventListener('click', () => {
+  express.addEventListener('click', () => {
     actualizarPrecioFinal();
   });
 
@@ -205,7 +205,7 @@ sumaDePrecios();
     precioFinal.innerHTML = "<b>"+"USD " +total.toFixed(2)+"</b>";
 
   })
-  expres.addEventListener('click', ()=>{
+  express.addEventListener('click', ()=>{
     let valorEnvio = document.getElementById('envio');
     let envioExpres = sumaTotal*0.07
     valorEnvio.innerHTML = "USD " + envioExpres.toFixed(2)
@@ -221,92 +221,126 @@ sumaDePrecios();
     
     precioFinal.innerHTML = "<b>"+"USD " +total.toFixed(2)+"</b>";
   })
-
-// Funcion para mostrar el modal compras//
-document.getElementById('openModal').addEventListener('click', function() {
-  document.getElementById('paymentModal').style.display = 'block';
-});
-
-document.getElementById('closeModal').addEventListener('click', function() {
-  document.getElementById('paymentModal').style.display = 'none';
-});
-
-document.getElementById('paymentMethod').addEventListener('change', function() {
-  var selectedMethod = this.value;
-
-  document.getElementById('creditCardDetails').classList.add('hidden');
-  document.getElementById('bankTransferDetails').classList.add('hidden');
-
-  if (selectedMethod === 'tarjeta') {
-      document.getElementById('creditCardDetails').classList.remove('hidden');
-      document.getElementById('cardNumber').disabled = false;
-      document.getElementById('expirationDate').disabled = false;
-      document.getElementById('codigoSeguridad').disabled = false;
-      document.getElementById('bankAccount').disabled = true;
-  } else if (selectedMethod === 'transferencia') {
-      document.getElementById('bankTransferDetails').classList.remove('hidden');
-      document.getElementById('cardNumber').disabled = true;
-      document.getElementById('expirationDate').disabled = true;
-      document.getElementById('codigoSeguridad').disabled = true;
-      document.getElementById('bankAccount').disabled = false;
-  }
-});
-
-document.getElementById('paymentForm').addEventListener('submit', function(event) {
-  event.preventDefault();
   
-  // Recopila los datos del formulario
-  var paymentMethod = document.getElementById('paymentMethod').value;
-  var cardNumber = document.getElementById('cardNumber').value;
-  var expirationDate = document.getElementById('expirationDate').value;
-  var bankAccount = document.getElementById('bankAccount').value;
-  var codigoSeguridad = document.getElementById('codigoSeguridad').value;
-
- 
- 
-var alertText = ''; // Inicializamos una cadena vacía para almacenar el texto de la alerta
-
-if (paymentMethod) {
-    alertText += `<p><strong>Método de Pago:</strong> ${paymentMethod}</p>`;
-}
-
-if (cardNumber) {
-    alertText += `<p><strong>Número de Tarjeta:</strong> ${cardNumber}</p>`;
-}
-
-if (expirationDate) {
-    alertText += `<p><strong>Fecha de Vencimiento:</strong> ${expirationDate}</p>`;
-}
-
-if (bankAccount) {
-    alertText += `<p><strong>Número de cuenta:</strong> ${bankAccount}</p>`;
-}
-if (codigoSeguridad){
-  alertText += `<p><strong>Código Seguridad:</strong> ${codigoSeguridad}</p>`;
-}
-
-
-// Mostrar la alerta solo si hay datos para mostrar
-if (alertText) {
-    Swal.fire({
-        icon: 'success',
-        title: 'Datos de pago guardados',
-        html: alertText
-    });
-}
-
-
-
-  // Cierra el modal
-  document.getElementById('paymentModal').style.display = 'none';
+// Funcion para mostrar el modal compras//
+document.getElementById("openModal").addEventListener("click", function () {
+  document.getElementById("paymentModal").style.display = "block";
 });
+// Funcion para cerrar el modal compras//
+document.getElementById("closeModal").addEventListener("click", function () {
+  document.getElementById("paymentModal").style.display = "none";
+});
+// Funcion para guardar los datos de la compra //
+document.getElementById("paymentMethod").addEventListener("change", function () {
+    var selectedMethod = this.value;
 
+    document.getElementById("creditCardDetails").classList.add("hidden");
+    document.getElementById("bankTransferDetails").classList.add("hidden");
+    document.getElementById("seleccionarPago").classList.add("hidden");
+    if (selectedMethod === "tarjeta") {
+      document.getElementById("creditCardDetails").classList.remove("hidden");
+      document.getElementById("cardNumber").disabled = false;
+      document.getElementById("expirationDate").disabled = false;
+      document.getElementById("codigoSeguridad").disabled = false;
+      document.getElementById("bankAccount").disabled = true;
+      document.getElementById("btnn").disabled = false;
+      localStorage.setItem('selectedMethod', selectedMethod);
+    } else if (selectedMethod === "transferencia") {
+      document.getElementById("bankTransferDetails").classList.remove("hidden");
+      document.getElementById("cardNumber").disabled = true;
+      document.getElementById("expirationDate").disabled = true;
+      document.getElementById("codigoSeguridad").disabled = true;
+      document.getElementById("bankAccount").disabled = false;
+      document.getElementById("btnn").disabled = false;
+      localStorage.setItem('selectedMethod', selectedMethod);
+    } else if (selectedMethod === "seleccione") {
+      document.getElementById("btnn").disabled = true;
+      document.getElementById("bankTransferDetails").classList.remove;
+      document.getElementById("creditCardDetails").classList.remove;
+     
+      Swal.fire({
+        icon: "error",
+        title: "Selecciona una opcion de pago",
+      });
+    }
+  });
+  
+  function mostrarPago() {
+    var selectedMethod = localStorage.getItem('selectedMethod');
+    var pagoSeleccionado = document.getElementById("pagoSeleccionado");
+  
+    if (selectedMethod === "tarjeta") {
+      pagoSeleccionado.innerHTML = "Tarjeta de crédito";
+    } else if (selectedMethod === "transferencia") {
+      pagoSeleccionado.innerHTML = "Transferencia bancaria";
+    }
+  }
+  mostrarPago();
 
-// función para eliminar elementos del carrito
-//function eliminarProducto() {
-  //const foundId = arrayProductos.find((element) => element.id);
-  //let carrito = JSON.parse(localStorage.getItem('arrayProductos'))
+document.getElementById("paymentForm").addEventListener("submit", function (event) {
+    event.preventDefault();
 
-  //console.log(carrito)
-  //arrayProductos = arrayProductos.filter()
-//}
+    // Recopila los datos del formulario
+
+    var cardNumber = document.getElementById("cardNumber").value;
+    var expirationDate = document.getElementById("expirationDate").value;
+    var bankAccount = document.getElementById("bankAccount").value;
+    var codigoSeguridad = document.getElementById("codigoSeguridad").value;
+
+    // Inicializamos una cadena vacía para almacenar el texto de la alerta
+if (cardNumber && expirationDate && codigoSeguridad || bankAccount) {
+      Swal.fire({
+        icon: "success",
+        title: "Datos de pago guardados",
+      });
+      setTimeout(() => {
+        window.location.href = "../cart.html";
+      }, 2000);
+     
+    } else {
+      Swal.fire({
+         icon: "warning",
+         title: "No se han ingresado todos los campos requeridos",
+       });
+     }
+});
+document.getElementById("paymentModal").style.display = "none";
+
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+
+//Validacion de radio buttons
+function envios() {
+  const envios = document.getElementsByName("env");
+
+  // Itera a través de los botones de radio
+  for (let envio of envios) {
+    // Verifica si el botón de radio está marcado
+    if (envio.checked) {
+      // Si está marcado, aplica la clase "is-valid" y quita la clase "is-invalid"
+      envio.classList.remove("is-invalid");
+      envio.classList.add("is-valid");
+    } else {
+      // Si no está marcado, quita la clase "is-valid" y aplica la clase "is-invalid"
+      envio.classList.remove("is-valid");
+      envio.removeAttribute('class');
+    }
+  }
+}

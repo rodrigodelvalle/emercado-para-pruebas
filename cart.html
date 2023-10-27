@@ -69,103 +69,142 @@
         </table>
 
         <div id="subtotal"></div>
+      
+      </div >
+
+<div id="container" class="row">
+  <div  class="col-md-6 order-md-1">
+<form  id="formDatosEnvio" class="needs-validation " novalidate>
+        <div id="formEnvio">
+          <div>
+            <h4 id="h4form"> <strong> Tipo de envío </strong> </h4>
+            <br>
+
+            <div class="col-12">
+              <div class="form-check col-12">
+                <input class="form-check-input" id="premium" type="radio" name="env" value="p" required> 
+                <label class="form-check-label" for="premium">Premium (2 a 5 días - 15%)</label>
+              </div>
+             
+              <div class="form-check col-12">
+              <input class="form-check-input" id="express" type="radio" name="env" value="e" required>
+              <label class="form-check-label" for="express"> Express (5 a 8 días - 7%)</label>
+              </div>
+
+              <div class="form-check col-12">
+              <input class="form-check-input" id="estandar" type="radio" name="env" value="es" required >
+              <label class="form-check-label" for="estandar">Estándar (12 a 15 días - 5%)</label>
+              <div class="invalid-feedback" style="width: auto;">Por favor, seleccione un tipo de envio</div>
+               </div>
+            </div>
+
+              <p> <strong>¿Debemos envolver tu compra como un obsequio? </strong> </p>
+           <div class="mb-3 form-check">
+             <input type="checkbox" class="form-check-input" >
+             <p> Si, la compra es un obsequio y será enviada a su destinatario. </p>
+            </div>
+
+            <div class="mb-3">
+              <h5> Datos de envío</h5>
+              <label for="calle" class="form-label">Calle:</label>
+              <input id="ealle" type="text" class="form-control"  aria-describedby="emailHelp" required>
+              <div class="invalid-feedback">Por favor ingrese una calle</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="puerta" class="form-label">Número</label>
+              <input id="puerta" type="number" class="form-control" required >
+              <div class="invalid-feedback">Por favor, ingrese un numero</div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="esquina" class="form-label">Esquina</label>
+              <input id="esquina" type="text" class="form-control" required >
+              <div class="invalid-feedback">Por favor, ingrese una esquina</div>
+            </div>
+            <button id="confirmPurchase" class="btn btn-primary" onclick="envios()">Confirmar compra</button>
+          </div>
+          
+        </div>
         
-
-      </div>
-  <div id="formEnvio">
-    <div>
-      <h4 id="h4form"> <strong> Tipo de envío </strong> </h4>
-      <br>
-      <p>
-        <input id="premium" type="radio" name="env" value="p" required> Premium (2 a 5 días - 15%)
-        <br>
-        <input id="expres" type="radio" name="env" value="e" required> Express (5 a 8 días - 7%)
-        <br>
-        <input id="estandar" type="radio" name="env" value="es" required> Estándar (12 a 15 días - 5%)
-      </p>
-      <p> <strong>¿Debemos envolver tu compra como un obsequio? </strong> </p>
-     <div class="mb-3 form-check">
-       <input type="checkbox" class="form-check-input" >
-       <p> Si, la compra es un obsequio y será enviada a su destinatario. </p>
-      </div>
-      <div class="mb-3">
-        <h5> Datos de envío</h5>
-        <label for="exampleInputEmail1" class="form-label">Calle:</label>
-        <input id="exampleInputEmail1" type="text" class="form-control"  aria-describedby="emailHelp">
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Número</label>
-        <input id="exampleInputPassword1" type="number" class="form-control" >
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword2" class="form-label">Esquina</label>
-        <input id="exampleInputPassword2" type="text" class="form-control" >
-      </div>
+      </form>
     </div>
 
-  </div>
 
+
+    <div class="col-md-6 order-md-2">
+    <br>
+      <div class="container " id="containerCostos">
+        <h3 id="costos" style="text-align: center; margin-top: 10px;">Costos</h3>
+      <ul class="list-group">
+        <div class="list-group-item ">
+          <div class="d-flex justify-content-between">
+            <span>Subtotal</span> <small id="totalForm"></small>
+          </div>
+          <small>Costo unitario del producto por cantidad</small>
+        </div>
+         
+        <div class="list-group-item ">
+          <div class="d-flex justify-content-between">
+            <span>Costo de envio</span> <small id="envio"></small>
+          </div>
+          <small>Según el tipo de envio</small>
+        </div>
+        <div class="list-group-item d-flex justify-content-between">
+           <p>Total ($)</p>  <p id="precioFinal" class="font-weight-bold"></p>
+        </div>
+      </ul>
+      </div>
+    
+
+
+<!--Formas de pago-->
   <br>
+  <div class="container text-center" >
+    <label>Forma de pago</label><br>
+    <div id="pagoSeleccionado"></div>
+  <button id="openModal" class="btn btn-success">Seleccionar</button><br>
 
-  <hr>
-    <h3 id="costos">Costos</h3>
-  <div class="container" id="containerCostos">
-  
-  <ul class="list-group">
-    <div class="list-group-item ">
-      <div class="d-flex justify-content-between">
-        <span>Subtotal</span> <small id="totalForm"></small>
-      </div>
-      <small>Costo unitario del producto por cantidad</small>
-    </div>
-     
-    <div class="list-group-item ">
-      <div class="d-flex justify-content-between">
-        <span>Costo de envio</span> <small id="envio"></small>
-      </div>
-      <small>Según el tipo de envio</small>
-    </div>
-    <div class="list-group-item d-flex justify-content-between">
-       <p>Total ($)</p>  <p id="precioFinal" class="font-weight-bold"></p>
-    </div>
-  </ul>
-  </div>
-  <!--Formas de pago-->
-  <br>
-  <hr>
-  <div class="container text-center">
-  <h3>Forma de pago</h3><br>
-  <br>
-  <button id="openModal" class="btn btn-success">Seleccionar</button>
   <div id="paymentModal" class="modal">
       <div class="modal-content">
           <span class="close" id="closeModal"><abbr title="Cerrar ventana">&times;</abbr></span>
           <h2>Seleccionar Forma de Pago</h2>
+          <div id="pagoSeleccionado" ></div>
           <form id="paymentForm">
               <label for="paymentMethod">Método de Pago:</label>
               <select id="paymentMethod" name="paymentMethod">
-                  <option value="tarjeta">Tarjeta de Crédito</option>
+                <option value="seleccione" selected >--Seleccione un metodo de Pago--</option>
+                  <option value="tarjeta" >Tarjeta de Crédito</option>
                   <option value="transferencia">Transferencia Bancaria</option>
               </select>
+              <div id="seleccionarPago" class="hidden">
+               
+              </div>
               <div id="creditCardDetails" class="hidden">
                   
                   <label for="cardNumber">Número de Tarjeta:</label>
-                  <input type="text" id="cardNumber" name="cardNumber">
-                  <label for="expirationDate" >Fecha de Vencimiento:</label>
-                  <input type="text" size=40 style="width:100px" id="expirationDate" name="expirationDate" placeholder="MM/AA">
-                  <label for="codigoSeguridad">Código de seguridad</label>
-                  <input type="text" id="codigoSeguridad" name="codigoSeguridad">
+                  <input type="number" id="cardNumber" name="cardNumber">
+                  <label for="expirationDate" >Fecha de Vencimiento(MM/AA):</label>
+                  <input type="number" size=40 style="width:100px" id="expirationDate" name="expirationDate"><br>
+                  <label for="codigoSeguridad">Codigo de seguridad</label>
+                  <input type="number" size=40 style="width:100px" id="codigoSeguridad" name="codigoSeguridad"><br>
               </div>
             
               <div id="bankTransferDetails" class="hidden">
                   <label for="bankAccount">Cuenta Bancaria:</label>
-                  <input type="text" id="bankAccount" name="bankAccount">
+                  <input type="number" id="bankAccount" name="bankAccount">
               </div>
-              <input type="submit" value="Confirmar">
+              <button  class="btn btn-primary" id="btnn" type="submit" value="Confirmar"> Confirmar</button>
           </form>
       </div>
   </div>
 </div>
+
+ 
+</div>
+</div>
+
+
   </main>
   <footer class="text-muted">
     <div class="container">
