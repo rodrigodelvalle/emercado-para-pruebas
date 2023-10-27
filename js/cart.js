@@ -28,8 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch(URL_info)
     .then(response => response.json())
     .then(data => {
-      //showCartInfo(data.articles[0]);
       mostrarLista();
+      if (document.getElementById("productosCart").innerHTML.trim() === "") {
+        showCartInfo(data.articles[0]);
+      }
       let cantidades = document.getElementsByClassName('cant');
       for (let i = 0; i < cantidades.length; i++) { //Recorre los elementos que tienen la clase "cant"
         cantidades[i].addEventListener('input', recalcular);       // Asignar el evento 'input' a todos los elementos con la clase 'cant' después de cargar el contenido
