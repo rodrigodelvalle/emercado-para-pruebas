@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 })
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
   // Llama a sumaDePrecios() u otras acciones que desees realizar al cargar la página.
   sumaDePrecios();
 });
@@ -28,16 +28,27 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch(URL_info)
     .then(response => response.json())
     .then(data => {
-      showCartInfo(data.articles[0]);
+      //showCartInfo(data.articles[0]);
       mostrarLista();
       let cantidades = document.getElementsByClassName('cant');
       for (let i = 0; i < cantidades.length; i++) { //Recorre los elementos que tienen la clase "cant"
         cantidades[i].addEventListener('input', recalcular);       // Asignar el evento 'input' a todos los elementos con la clase 'cant' después de cargar el contenido
-        cantidades[i].addEventListener('change', sumaDePrecios); 
+        cantidades[i].addEventListener('change', sumaDePrecios);
       }
     });
-    
+
 });
+// document.addEventListener("DOMContentLoaded", () => {
+//   let carrito = JSON.parse[localStorage.getItem("arrayProductos")];
+//   getJSONData(URL_info).then(function (resultObj) {
+//     const objet = carrito.findIndex((product) => product.id == resultObj.data.articles[0].id)
+//     if (carrito == null) {   
+//       console.log("hola")   
+//       carrito.push(data.articles[0]);
+//       mostrarLista(carrito)
+//     } else { 
+//       mostrarLista(carrito) }
+//   })
 
 function showCartInfo(data) {
   let htmlContentToAppend = `
@@ -72,27 +83,28 @@ function mostrarLista() {
     } //se agregó el id=${arrayProductos[i].name arriba//
     document.getElementById("productosCart").innerHTML += content;
 
-}
+  }
 }
 function borracion(index) {                                                                //Función que obtiene el array de productos actual, elimina el valor "index" proporcionado por la misma etiqueta como variable
   var obtenidoDeLocalStorage = JSON.parse(localStorage.getItem('arrayProductos'))          //Posteriormente reemplaza el localstorage actual con el nuevo, luego elimina todos los valores de la etiqueta con id="productosCart"
-  obtenidoDeLocalStorage.splice(index,1)                                                   //Ejecuta la función mistrarLista() para volver a cargar los productos
+  obtenidoDeLocalStorage.splice(index, 1)                                                   //Ejecuta la función mistrarLista() para volver a cargar los productos
   localStorage.setItem('arrayProductos', JSON.stringify(obtenidoDeLocalStorage))
-  document.getElementById("productosCart").innerHTML ="";
+  document.getElementById("productosCart").innerHTML = "";
   mostrarLista()
 
 }
 
 function convertirAUSD(precio, currency) {
-  if (currency === 'UYU'){
-  const tasaCambio = 0.0243; // La tasa de cambio real 
-  return parseFloat(precio) * tasaCambio;
-} else {
-  return parseFloat(precio);
-} }
+  if (currency === 'UYU') {
+    const tasaCambio = 0.0243; // La tasa de cambio real 
+    return parseFloat(precio) * tasaCambio;
+  } else {
+    return parseFloat(precio);
+  }
+}
 
 function recalcular() {
-  let cantidades = document.getElementsByClassName('cant'); 
+  let cantidades = document.getElementsByClassName('cant');
   let precios = document.getElementsByClassName('precio');
   let preciosTotales = document.getElementsByClassName('res');
   let sumaFinal = document.getElementById('totalForm');
@@ -111,7 +123,7 @@ function recalcular() {
 }
 
 function sumaDePrecios() {
-  let cantidades = document.getElementsByClassName('cant'); 
+  let cantidades = document.getElementsByClassName('cant');
   let precios = document.getElementsByClassName('precio');
   let sumaFinal = document.getElementById('totalForm');
   let precioFinal = document.getElementById('precioFinal');
@@ -197,31 +209,31 @@ function sumaDePrecios() {
 // Llama a la función para inicializar todo
 sumaDePrecios();
 
-  premium.addEventListener('click', ()=>{
-    let valorEnvio = document.getElementById('envio');
-    let envioPremium = sumaTotal*0.15;
-    valorEnvio.innerHTML = "USD " + envioPremium.toFixed(2);
-    total = sumaTotal+envioPremium;
-    precioFinal.innerHTML = "<b>"+"USD " +total.toFixed(2)+"</b>";
+premium.addEventListener('click', () => {
+  let valorEnvio = document.getElementById('envio');
+  let envioPremium = sumaTotal * 0.15;
+  valorEnvio.innerHTML = "USD " + envioPremium.toFixed(2);
+  total = sumaTotal + envioPremium;
+  precioFinal.innerHTML = "<b>" + "USD " + total.toFixed(2) + "</b>";
 
-  })
-  express.addEventListener('click', ()=>{
-    let valorEnvio = document.getElementById('envio');
-    let envioExpres = sumaTotal*0.07
-    valorEnvio.innerHTML = "USD " + envioExpres.toFixed(2)
-    total = sumaTotal+envioExpres
-    precioFinal.innerHTML = "<b>"+"USD " +total.toFixed(2)+"</b>";
+})
+express.addEventListener('click', () => {
+  let valorEnvio = document.getElementById('envio');
+  let envioExpres = sumaTotal * 0.07
+  valorEnvio.innerHTML = "USD " + envioExpres.toFixed(2)
+  total = sumaTotal + envioExpres
+  precioFinal.innerHTML = "<b>" + "USD " + total.toFixed(2) + "</b>";
 
-  })
-  estandar.addEventListener('click', ()=>{
-    let valorEnvio = document.getElementById('envio');
-    let envioEstandar = sumaTotal*0.05
-    valorEnvio.innerHTML = "USD " + envioEstandar.toFixed(2)
-    total = sumaTotal+envioEstandar
-    
-    precioFinal.innerHTML = "<b>"+"USD " +total.toFixed(2)+"</b>";
-  })
-  
+})
+estandar.addEventListener('click', () => {
+  let valorEnvio = document.getElementById('envio');
+  let envioEstandar = sumaTotal * 0.05
+  valorEnvio.innerHTML = "USD " + envioEstandar.toFixed(2)
+  total = sumaTotal + envioEstandar
+
+  precioFinal.innerHTML = "<b>" + "USD " + total.toFixed(2) + "</b>";
+})
+
 // Funcion para mostrar el modal compras//
 document.getElementById("openModal").addEventListener("click", function () {
   document.getElementById("paymentModal").style.display = "block";
@@ -232,77 +244,77 @@ document.getElementById("closeModal").addEventListener("click", function () {
 });
 // Funcion para guardar los datos de la compra //
 document.getElementById("paymentMethod").addEventListener("change", function () {
-    var selectedMethod = this.value;
+  var selectedMethod = this.value;
 
-    document.getElementById("creditCardDetails").classList.add("hidden");
-    document.getElementById("bankTransferDetails").classList.add("hidden");
-    document.getElementById("seleccionarPago").classList.add("hidden");
-    if (selectedMethod === "tarjeta") {
-      document.getElementById("creditCardDetails").classList.remove("hidden");
-      document.getElementById("cardNumber").disabled = false;
-      document.getElementById("expirationDate").disabled = false;
-      document.getElementById("codigoSeguridad").disabled = false;
-      document.getElementById("bankAccount").disabled = true;
-      document.getElementById("btnn").disabled = false;
-      localStorage.setItem('selectedMethod', selectedMethod);
-    } else if (selectedMethod === "transferencia") {
-      document.getElementById("bankTransferDetails").classList.remove("hidden");
-      document.getElementById("cardNumber").disabled = true;
-      document.getElementById("expirationDate").disabled = true;
-      document.getElementById("codigoSeguridad").disabled = true;
-      document.getElementById("bankAccount").disabled = false;
-      document.getElementById("btnn").disabled = false;
-      localStorage.setItem('selectedMethod', selectedMethod);
-    } else if (selectedMethod === "seleccione") {
-      document.getElementById("btnn").disabled = true;
-      document.getElementById("bankTransferDetails").classList.remove;
-      document.getElementById("creditCardDetails").classList.remove;
-     
-      Swal.fire({
-        icon: "error",
-        title: "Selecciona una opcion de pago",
-      });
-    }
-  });
-  
-  function mostrarPago() {
-    var selectedMethod = localStorage.getItem('selectedMethod');
-    var pagoSeleccionado = document.getElementById("pagoSeleccionado");
-  
-    if (selectedMethod === "tarjeta") {
-      pagoSeleccionado.innerHTML = "Tarjeta de crédito";
-    } else if (selectedMethod === "transferencia") {
-      pagoSeleccionado.innerHTML = "Transferencia bancaria";
-    }
+  document.getElementById("creditCardDetails").classList.add("hidden");
+  document.getElementById("bankTransferDetails").classList.add("hidden");
+  document.getElementById("seleccionarPago").classList.add("hidden");
+  if (selectedMethod === "tarjeta") {
+    document.getElementById("creditCardDetails").classList.remove("hidden");
+    document.getElementById("cardNumber").disabled = false;
+    document.getElementById("expirationDate").disabled = false;
+    document.getElementById("codigoSeguridad").disabled = false;
+    document.getElementById("bankAccount").disabled = true;
+    document.getElementById("btnn").disabled = false;
+    localStorage.setItem('selectedMethod', selectedMethod);
+  } else if (selectedMethod === "transferencia") {
+    document.getElementById("bankTransferDetails").classList.remove("hidden");
+    document.getElementById("cardNumber").disabled = true;
+    document.getElementById("expirationDate").disabled = true;
+    document.getElementById("codigoSeguridad").disabled = true;
+    document.getElementById("bankAccount").disabled = false;
+    document.getElementById("btnn").disabled = false;
+    localStorage.setItem('selectedMethod', selectedMethod);
+  } else if (selectedMethod === "seleccione") {
+    document.getElementById("btnn").disabled = true;
+    document.getElementById("bankTransferDetails").classList.remove;
+    document.getElementById("creditCardDetails").classList.remove;
+
+    Swal.fire({
+      icon: "error",
+      title: "Selecciona una opción de pago",
+    });
   }
-  mostrarPago();
+});
+
+function mostrarPago() {
+  var selectedMethod = localStorage.getItem('selectedMethod');
+  var pagoSeleccionado = document.getElementById("titleFormaDePago");
+
+  if (selectedMethod === "tarjeta") {
+    pagoSeleccionado.innerHTML = "Medio de Pago: Tarjeta de crédito";
+  } else if (selectedMethod === "transferencia") {
+    pagoSeleccionado.innerHTML = "Medio de Pago: Transferencia bancaria";
+  }
+}
+mostrarPago();
 
 document.getElementById("paymentForm").addEventListener("submit", function (event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    // Recopila los datos del formulario
+  // Recopila los datos del formulario
 
-    var cardNumber = document.getElementById("cardNumber").value;
-    var expirationDate = document.getElementById("expirationDate").value;
-    var bankAccount = document.getElementById("bankAccount").value;
-    var codigoSeguridad = document.getElementById("codigoSeguridad").value;
+  var cardNumber = document.getElementById("cardNumber").value;
+  var expirationDate = document.getElementById("expirationDate").value;
+  var bankAccount = document.getElementById("bankAccount").value;
+  var codigoSeguridad = document.getElementById("codigoSeguridad").value;
 
-    // Inicializamos una cadena vacía para almacenar el texto de la alerta
-if (cardNumber && expirationDate && codigoSeguridad || bankAccount) {
-      Swal.fire({
-        icon: "success",
-        title: "Datos de pago guardados",
-      });
-      setTimeout(() => {
-        window.location.href = "../cart.html";
-      }, 2000);
-     
-    } else {
-      Swal.fire({
-         icon: "warning",
-         title: "No se han ingresado todos los campos requeridos",
-       });
-     }
+  // Inicializamos una cadena vacía para almacenar el texto de la alerta
+  if (cardNumber && expirationDate && codigoSeguridad || bankAccount) {
+    Swal.fire({
+      icon: "success",
+      title: "Datos de pago guardados",
+    });
+    setTimeout(() => {
+      window.location.href = "../cart.html";
+    }, 1000);
+
+  } else {
+    Swal.fire({
+      icon: "warning",
+      title: "No se han ingresado todos los campos requeridos",
+    });
+  }
 });
 document.getElementById("paymentModal").style.display = "none";
 
@@ -320,7 +332,6 @@ document.getElementById("paymentModal").style.display = "none";
         event.preventDefault()
         event.stopPropagation()
       }
-
       form.classList.add('was-validated')
     }, false)
   })
@@ -329,7 +340,17 @@ document.getElementById("paymentModal").style.display = "none";
 //Validacion de radio buttons
 function envios() {
   const envios = document.getElementsByName("env");
-
+  if (localStorage.getItem("selectedMethod") === null) {  // verifica que haya algo en el local, ya sea tarjeta o transferencia y si no hay debería mostrar el mensaje
+    let content = "";
+    content +=
+    `
+    <div class="invalid-feedback">
+            Por favor, ingrese un metodo de pago.
+          </div>
+    `
+    document.getElementById("titleFormaDePago").innerHTML += content;
+  }
+  else {
   // Itera a través de los botones de radio
   for (let envio of envios) {
     // Verifica si el botón de radio está marcado
@@ -343,4 +364,40 @@ function envios() {
       envio.removeAttribute('class');
     }
   }
-}
+}}
+
+// document.getElementById("confirmPurchase").addEventListener("click", () => {
+
+//   const confir = document.getElementsByClassName("is-invalid")
+// let formaDePago = localStorage.getItem("selectedMethod").value;
+//   if (formaDePago === "") {
+//     btnn.classList.add("is-invalid")
+//   } else {
+//     btnn.classList.remove("is-invalid")
+//   }
+//   if (confir.length === 0) {
+//     //poneralerta
+//   }
+// })
+
+
+//Validacion ambos forms
+// let btnConfirmPurchase = document.getElementById('confirmPurchase');
+
+// btnConfirmPurchase.addEventListener('click', () => {
+//   let formEnvio = document.getElementById('"formDatosEnvio"');
+//   let formPayMehtod = document.getElementById('paymentForm');
+
+//   if (!formEnvio.checkValidity && !formPayMehtod.checkValidity) {
+//     event.preventDefault()
+//     event.stopPropagation()
+//   }
+//   else {
+//     Swal.fire(
+//       'Genial!',
+//       'Haz realizado tu compra con éxito',
+//       'success'
+//     )
+//   }
+
+// });
