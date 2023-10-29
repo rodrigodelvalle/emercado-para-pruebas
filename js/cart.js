@@ -243,6 +243,7 @@ document.getElementById("openModal").addEventListener("click", function () {
 // Funcion para cerrar el modal compras//
 document.getElementById("closeModal").addEventListener("click", function () {
   document.getElementById("paymentModal").style.display = "none";
+  localStorage.removeItem('selectedMethod');
 });
 // Funcion para guardar los datos de la compra //
 document.getElementById("paymentMethod").addEventListener("change", function () {
@@ -309,7 +310,7 @@ document.getElementById("paymentForm").addEventListener("submit", function (even
     });
     setTimeout(() => {
       window.location.href = "../cart.html";
-    }, 1000);
+    }, 2000);
 
   } else {
     Swal.fire({
