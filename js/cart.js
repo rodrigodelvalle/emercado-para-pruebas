@@ -40,17 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-// document.addEventListener("DOMContentLoaded", () => {
-//   let carrito = JSON.parse[localStorage.getItem("arrayProductos")];
-//   getJSONData(URL_info).then(function (resultObj) {
-//     const objet = carrito.findIndex((product) => product.id == resultObj.data.articles[0].id)
-//     if (carrito == null) {   
-//       console.log("hola")   
-//       carrito.push(data.articles[0]);
-//       mostrarLista(carrito)
-//     } else { 
-//       mostrarLista(carrito) }
-//   })
 
 function showCartInfo(data) {
   let htmlContentToAppend = `
@@ -347,13 +336,12 @@ function envios() {
     let content = "";
     content +=
     `
-    <div class="invalid-feedback">
+    <div class="text-danger">
             Por favor, ingrese un metodo de pago.
           </div>
     `
-    document.getElementById("titleFormaDePago").innerHTML += content;
-  }
-  else {
+    document.getElementById("titleFormaDePago").innerHTML = content;
+  } else {
   // Itera a través de los botones de radio
   for (let envio of envios) {
     // Verifica si el botón de radio está marcado
@@ -368,39 +356,3 @@ function envios() {
     }
   }
 }}
-
-// document.getElementById("confirmPurchase").addEventListener("click", () => {
-
-//   const confir = document.getElementsByClassName("is-invalid")
-// let formaDePago = localStorage.getItem("selectedMethod").value;
-//   if (formaDePago === "") {
-//     btnn.classList.add("is-invalid")
-//   } else {
-//     btnn.classList.remove("is-invalid")
-//   }
-//   if (confir.length === 0) {
-//     //poneralerta
-//   }
-// })
-
-
-//Validacion ambos forms
-// let btnConfirmPurchase = document.getElementById('confirmPurchase');
-
-// btnConfirmPurchase.addEventListener('click', () => {
-//   let formEnvio = document.getElementById('"formDatosEnvio"');
-//   let formPayMehtod = document.getElementById('paymentForm');
-
-//   if (!formEnvio.checkValidity && !formPayMehtod.checkValidity) {
-//     event.preventDefault()
-//     event.stopPropagation()
-//   }
-//   else {
-//     Swal.fire(
-//       'Genial!',
-//       'Haz realizado tu compra con éxito',
-//       'success'
-//     )
-//   }
-
-// });
