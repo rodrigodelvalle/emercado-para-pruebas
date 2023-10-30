@@ -409,6 +409,8 @@ function envios() {
       })
       metodoDePago.classList.remove('text-danger')
       mostrarPago()
+      modal.style.display = "none";
+
     }
     if (!envioForm.checkValidity()) {
       event.preventDefault();
@@ -420,6 +422,5 @@ function envios() {
       event.preventDefault()
     }
     
-    modal.style.display = "none";
-
+    
   })
