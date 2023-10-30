@@ -40,6 +40,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+// document.addEventListener("DOMContentLoaded", () => {
+//   let carrito = JSON.parse[localStorage.getItem("arrayProductos")];
+//   getJSONData(URL_info).then(function (resultObj) {
+//     const objet = carrito.findIndex((product) => product.id == resultObj.data.articles[0].id)
+//     if (carrito == null) {   
+//       console.log("hola")   
+//       carrito.push(data.articles[0]);
+//       mostrarLista(carrito)
+//     } else { 
+//       mostrarLista(carrito) }
+//   })
 
 function showCartInfo(data) {
   let htmlContentToAppend = `
@@ -292,7 +303,7 @@ document.getElementById("paymentForm").addEventListener("submit", function (even
   var codigoSeguridad = document.getElementById("codigoSeguridad").value;
 
   // Inicializamos una cadena vacía para almacenar el texto de la alerta
-  if (cardNumber && expirationDate && codigoSeguridad || bankAccount) {
+  if ((cardNumber && expirationDate && codigoSeguridad) || bankAccount) {
     Swal.fire({
       icon: "success",
       title: "Datos de pago guardados",
@@ -332,7 +343,7 @@ document.getElementById("paymentModal").style.display = "none";
 //Validacion de radio buttons
 function envios() {
   const envios = document.getElementsByName("env");
-  if (localStorage.getItem("selectedMethod") === null) {  // verifica que haya algo en el local, ya sea tarjeta o transferencia y si no hay debería mostrar el mensaje
+  if (localStorage.getItem("paymentForm") === null) {  // verifica que haya algo en el local, ya sea tarjeta o transferencia y si no hay debería mostrar el mensaje
     let content = "";
     content +=
     `
@@ -356,3 +367,59 @@ function envios() {
     }
   }
 }}
+
+
+
+  const envioForm = document.getElementById("formDatosEnvio");
+  const paymentForm = document.getElementById("paymentForm");
+  envioForm.addEventListener('submit', function (event){
+  
+    if (!paymentForm.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Debes completar todos los campos.',
+      })
+    } else if (!envioForm.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Debes completar todos los campos.',
+      })
+    } else {
+   alert("Genial, tu compra se realizó con exito.")
+    }
+    
+   
+  })
+
+  let botonconfirmar = document.getElementById('btnn');
+  let metodoDePago = document.getElementById("titleFormaDePago")
+  let modal = document.getElementById('paymentModal');
+  botonconfirmar.addEventListener('click', function (event){
+    if(paymentForm.checkValidity()){
+      Swal.fire({
+        icon: 'success',
+        title: 'Genial',
+        text: 'Asignaste correctamente un metodo de pago',
+      })
+      metodoDePago.classList.remove('text-danger')
+      mostrarPago()
+    }
+    if (!envioForm.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+     
+    
+    }else {
+      
+      event.preventDefault()
+    }
+    
+    modal.style.display = "none";
+
+  })
