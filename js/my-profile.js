@@ -17,3 +17,50 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 })
 
+if(localStorage.getItem("username") || sessionStorage.getItem("username")) {
+    var emailInput = document.getElementById("email");
+    emailInput.value = localStorage.getItem("username") || sessionStorage.getItem("username");
+}
+
+var guardarBtn = document.getElementById("saveUserData");
+
+  // Agregar evento de clic al botón de guardar
+  guardarBtn.addEventListener("click", function() {
+    // Obtener valores de los campos de entrada
+    var nombreUsuario = document.getElementById("userFirstName").value;
+    var apellidoUsuario = document.getElementById("UserFirstSurname").value;
+
+    // Validar campos obligatorios
+    if (nombreUsuario && apellidoUsuario) {
+      // Guardar datos en el localStorage
+      localStorage.setItem("primernombreusuario", nombreUsuario);
+      localStorage.setItem("primerapellidousuario", apellidoUsuario);
+      // Guarda en local pero al enviar el form me vuelve a cero el input
+      var nameInput = document.getElementById("userFirstName");
+      nameInput.value = localStorage.getItem("primernombreusuario")
+      var surnameInput = document.getElementById("UserFirstSurname");
+      surnameInput.value = localStorage.getItem("primerapellidousuario")      
+    } 
+  });
+
+// Funcion para validar datos de Perfil de usuario
+function validate () {
+    'use strict'
+  
+    const forms = document.querySelectorAll('.needs-validation')
+  
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+  
+        form.classList.add('was-validated')
+      }, false)
+    })
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    validate();
+  }, false);

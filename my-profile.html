@@ -63,9 +63,67 @@
 </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+      <br>
+      <h3>Perfil</h3>
+      <br>
+      <div class="tab-pane" id="nav-userdata" role="tabpanel" aria-labelledby="nav-userdata-tab">
+      <form class="needs-validation" id="perfilUsuario" novalidate>
+        <div class="row gutters">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="form-group mb-4">
+              <label for="validationDefault01">Primer nombre*</label>
+              <input type="text" class="form-control user-profile mb-1" id="userFirstName" placeholder="Primer nombre" required>
+              <div class="invalid-feedback">
+                Debe ingresar su primer nombre.
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="form-group mb-4">
+              <label>Segundo nombre</label>
+              <input type="text" class="form-control user-profile" placeholder="Segundo nombre">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="form-group mb-4">
+              <label>Primer apellido*</label>
+              <input type="text" class="form-control user-profile" id="UserFirstSurname" placeholder="Primer apellido" required>
+              <div class="invalid-feedback">
+                Debe ingresar su primer apellido.
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="form-group mb-4">
+              <label>Segundo apellido</label>
+              <input type="text" class="form-control user-profile" placeholder="Segundo apellido">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="form-group mb-4">
+              <label for="email">E-mail*</label>
+              <input type="email" class="form-control user-profile" id="email" required>
+              <div class="invalid-feedback">
+                Debe ingresar una dirección de email.
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="form-group mb-4">
+              <label>Teléfono de contacto</label>
+              <input type="tel" class="form-control user-profile" placeholder="Número de celular" minlength="9" maxlength="9">
+              <div class="invalid-feedback">
+                Debe ingresar un número de telefono válido.
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="text-right">
+              <button type="submit" id="saveUserData" name="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </main>
   <footer class="text-muted">
