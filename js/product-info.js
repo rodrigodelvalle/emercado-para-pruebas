@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function showProduct(product) {
     let htmlContentToAppend = "";
-    "Ya se encuentra en el carrito" += `
+    htmlContentToAppend += `
     <main class="pb-5">
         <div class="text-center p-4">
             <h2>${product.name}</h2><br><br><hr>
