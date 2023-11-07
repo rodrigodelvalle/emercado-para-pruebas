@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link href="css/styles.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://kit.fontawesome.com/1fcc227a70.js" crossorigin="anonymous"></script>
   <style>
     .bd-placeholder-img {
@@ -72,7 +73,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
             <div class="form-group mb-4">
               <label for="validationDefault01">Primer nombre*</label>
-              <input type="text" class="form-control user-profile mb-1" id="userFirstName" placeholder="Primer nombre" required>
+              <input type="text" class="form-control user-profile mb-1" id="primerNombre" placeholder="Primer nombre" required>
               <div class="invalid-feedback">
                 Debe ingresar su primer nombre.
               </div>
@@ -81,13 +82,13 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
             <div class="form-group mb-4">
               <label>Segundo nombre</label>
-              <input type="text" class="form-control user-profile" placeholder="Segundo nombre">
+              <input id="segundoNombre" type="text" class="form-control user-profile invalid" placeholder="Segundo nombre" novalidate="">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
             <div class="form-group mb-4">
               <label>Primer apellido*</label>
-              <input type="text" class="form-control user-profile" id="UserFirstSurname" placeholder="Primer apellido" required>
+              <input type="text" class="form-control user-profile" id="primerApellido" placeholder="Primer apellido" required>
               <div class="invalid-feedback">
                 Debe ingresar su primer apellido.
               </div>
@@ -96,7 +97,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
             <div class="form-group mb-4">
               <label>Segundo apellido</label>
-              <input type="text" class="form-control user-profile" placeholder="Segundo apellido">
+              <input type="text" id="segundoApellido" class="form-control user-profile" placeholder="Segundo apellido">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -111,7 +112,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
             <div class="form-group mb-4">
               <label>Teléfono de contacto</label>
-              <input type="tel" class="form-control user-profile" placeholder="Número de celular" minlength="9" maxlength="9">
+              <input type="tel" class="form-control user-profile" id="telefono" placeholder="Número de celular" minlength="9" maxlength="9">
               <div class="invalid-feedback">
                 Debe ingresar un número de telefono válido.
               </div>
