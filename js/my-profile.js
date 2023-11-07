@@ -73,9 +73,7 @@ function validate () {
 
   document.addEventListener('DOMContentLoaded', function() {
     validate();
-  }, false)
-
-  
+  }, false);
 const inputFile = document.getElementById('inputFile');
 const imagenContainer = document.getElementById('imagenContainer');
 const imagenPredeterminada = document.getElementById('imagenPredeterminada');
