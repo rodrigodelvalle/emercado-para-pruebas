@@ -1,4 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {                                                                          
+document.addEventListener('DOMContentLoaded', () => {  
+    /*Funcion iniciada al cargar la página y regirá el navbar, se ejecutará la función para mostrar productos, y regirá tema oscuro y claro.
+    Requiere la variable idProduct para fijar otras dos variables adicionales: "URL_ID_PRODUCTS", "PRODUCT_INFO_COMMENTS_URL". 
+    Estas a su vez se utilizan para realizar fetchs. Y se ejecutan las funciones "showProducts" que mostrara los datos delk fetch dentro de la página y la función "shownComments" que mostrará los comentarios dentro de la página.
+    Se estable variables "nav" y "mode" y se utilizan para el tono de la navbar . "mode" se establece desde contenido de local storage para modo Light y Dark. */                                                                        
     let idProduct = localStorage.getItem("IdProduct");                                                                             //Se define la variable idProduct para multiples usos: generar el URL, buscar comentarios, etc
     let URL_ID_PRODUCTS = "https://japceibal.github.io/emercado-api/products/" + idProduct + ".json";
     const PRODUCT_INFO_COMMENTS_URL = "https://japceibal.github.io/emercado-api/products_comments/" + idProduct + ".json";
@@ -9,8 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(PRODUCT_INFO_COMMENTS_URL)
         .then(res => res.json())
         .then(data => showComments(data));
+    
+    /*Sección que se ejecuta para cargar los prodcutos relacionados*/    
+    showRelatedProducts();    
 
-    //modo dark del nav
+    //Sección que regula el modo ocuro y claro
     let nav = document.getElementById("navIndex")
     let mode = localStorage.getItem('mode')
     if (mode === 'dark') {
@@ -27,14 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nav.hasAttribute('data-bs-theme')) {
         botonCambiar.classList.add('active')
     }
-/*Funcion iniciada al cargar la página. Requiere la variable idProduct para fijar otras dos variables adicionales: "URL_ID_PRODUCTS", "PRODUCT_INFO_COMMENTS_URL". 
-Estas a su vez se utilizan para realizar fetchs. Y se ejecutan las funciones "showProducts" que mostrara los datos delk fetch dentro de la página y la función "shownComments" que mostrará los comentarios dentro de la página.
-Se estable variables "nav" y "mode" y se utilizan para el tono de la navbar . "mode" se establece desde contenido de local storage para modo Light y Dark. */
+
+    
 });
 
 
-//Botón que agrega el producto seleccionado a la lista
 document.addEventListener("DOMContentLoaded", () => {
+    /*Esta función permitira cargar productos en el carrito.
+    Esta funcion generá una variable "arrayProductos" con el contenido del localstorage. Depues, al accionase al añadir al carrito en la página.
+    Se generá variable constante "productExists" que sera un booleano TRUE si el el objeto se encuentra dentro de "arrayProductos" y FALSE si no se encuentra en "arrayproductos" .
+    Si el booleano es FALSE, se agregará el rpducto, caso contrario, se retornará la leyenda que "Ya se encuentra en el carrito" */
     document.getElementById("comprar").addEventListener("click", () => {
         let idProduct = localStorage.getItem("IdProduct"); 
         if (idProduct) {
@@ -72,15 +81,16 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error('IdProduct no encontrado en el almacenamiento local.');
         }
     });
-    /*Esta funcion generá una variable "arrayProductos" con el contenido del localstorage. Depues, al accionase al añadir al carrito en la página.
-    Se generá variable constante "productExists" que sera un booleano TRUE si el el objeto se encuentra dentro de "arrayProductos" y FALSE si no se encuentra en "arrayproductos" .
-    Si el booleano es FALSE, se agregará el rpducto, caso contrario, se retornará la leyenda que "Ya se encuentra en el carrito" */
 });
 
 
 function showProduct(product) {
+    /*.Función báscia que muestra los productos mediante la creación de etiquetas dentro de DOM. 
+    Esta se ejecuta durante el fetch al cargarse la página.
+    Requiere el argumento "product" que sera brindado por el fetch. Comienza por crear las varibles "htmlContentToAppend" y "htmlContentToAppend2" que se llenarán con el contenido del fecth.
+    Teniendo estas variables, se agregarán al innerHTML en el id="carrusel" y "containerItemsInfoProduct" */
     let htmlContentToAppend = "";
-    "Ya se encuentra en el carrito" += `
+    htmlContentToAppend += `
     <main class="pb-5">
         <div class="text-center p-4">
             <h2>${product.name}</h2><br><br><hr>
@@ -124,12 +134,13 @@ function showProduct(product) {
 
     document.getElementById("containerItemsInfoProduct").innerHTML = htmlContentToAppend;
     carrusel.innerHTML = htmlContentToAppend2;
-/*Función báscia que muestra los productos mediante la creación de etiquetas dentro de DOM. Esta se ejecuta durante el fetch al cargarse la página.
-Requiere el argumento "product" que sera brindado por el fetch. Comienza por crear las varibles "htmlContentToAppend" y "htmlContentToAppend2" que se llenarán con el contenido del fecth.
-Teniendo estas variables, se agregarán al innerHTML en el id="carrusel" y "containerItemsInfoProduct" */
 };
 
 function showRelatedProducts() {
+    /*Función muestra los productos relacionados. 
+    Se establecen las variables "idProduct"(basada en localstorage), "catID"(basada en la categoria), "URL" (el URl de la página).
+    Se ejecuta un fetch. Dentro de este fetch se establece la variable "content" de manera vacía para llenarla con contenido de tipo etiquetas, y la variable "productosMostrados" que será el numero de productos relacionados a mostrar.
+    La variable "productsRelated" llenado con los valores y etiquetas se agregará en el innerHTML.*/
     let idProduct = localStorage.getItem("IdProduct");
     let catID = localStorage.getItem("catID");
     let URL = "https://japceibal.github.io/emercado-api/cats_products/" + catID + ".json";
@@ -159,18 +170,13 @@ function showRelatedProducts() {
         .catch(error => {                                                                 //agregado para captar el error en caso de no obtener respuesta o problemas con el fetch
             console.error("Error al cargar los productos relacionados:", error);
         })
- /*Generación de una función para mostrar productos relacionados. Se establecen las variables "idProduct"(basada en localstorage), "catID"(basada en la categoria), "URL" (el URl de la página).
-    Se ejecuta un fetch. Dentro de este fetch se establece la variable "content" de manera vacía para llenarla con contenido de tipo etiquetas, y la variable "productosMostrados" que será el numero de productos relacionados a mostrar.
-    La variable "productsRelated" llenado con los valores y etiquetas se agregará en el innerHTML.
-      */ 
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    showRelatedProducts();
-    /*SE PUEDE RECORTAR */
-});
 
 function showComments(itemsArray) {
+    /* Función que agrega los comentarios del producto. 
+    Se creará la variable "divComent", y dos constantes que depresentarán las estrelas ("iconEstrellas") o su ausencia ("icoNoEstrella").
+    El número máximo de estrellas obtenibles es el valor de la constante "total", en caso de modificarse el numero de estrellasen un futuro. Este valor debe de correlacionarse con el valor máximo obtenible en el fetch*/
     let divComent = document.getElementById("containerItemsInfo")
     const iconEstrella = '<i class="fas fa-star" style="color: #ffc800;"></i>';
     const icoNoEstrella = '<i class="far fa-star" style="color: #ffc800;"></i>';
@@ -203,15 +209,17 @@ function showComments(itemsArray) {
     }
 
     divComent.innerHTML = htmlContentToAppend;
-    /* Función que agrega los comentarios del producto. se creará la variable "divComent", y dos constantes que depresentarán las estrelas ("iconEstrellas") o su ausencia ("icoNoEstrella").
-    El número máximo de estrellas obtenibles es el valor de la constante "total", en caso de modificarse el numero de estrellasen un futuro. Este valor debe de correlacionarse con el valor máximo obtenible en el fetch*/
 }
 
 
 
-let boton = document.getElementById("enviar"); //id del boton
+let boton = document.getElementById("enviar"); //se establece la variable boton que se obtiene de la etiqueta con id="enviar"
 
-boton.addEventListener("click", function () { //funcion que se utiliza para añadir el comentario 
+boton.addEventListener("click", function () {
+    /*La función se utiliza para añadir comentarios por el usuario.
+    La función funcionará al ocurrir un click en el botón con id="enviar". Se establecen varias variables "estrellas", "iconEstrella", "icoNoEstrella", "total", "commentarie1", "score", "nom1", "fecha". 
+    Se creará el objeto "data2" con ayuda de algunas variables para su trabajo. Se determina el valor de la variable "estrella" y se agrega el valor de la imagen necesaria a la variable "estrella"(fuera del objeto y no confundirse con estrellas dentro del objeto).
+    Se agrega el contenido de la etiqueta con los datos a la variable "htmlContentAppend" y se pushea al innerHTML en la id="containerItemInfo" */ 
     let estrellas = "";
     let iconEstrella = '<i class="fas fa-star" style="color: #ffc800;"></i>';
     let icoNoEstrella = '<i class="far fa-star" style="color: #ffc800;"></i>';
@@ -246,23 +254,20 @@ boton.addEventListener("click", function () { //funcion que se utiliza para aña
 `
     document.getElementById("containerItemsInfo").innerHTML += htmlContentToAppend;
 
-    //limpiar 
+    //Se límpian los valores 
     commentarie1.value = "";
     score.value = "";
-    /*La función funcionará al ocurrir un click en el botón con id="enviar". Se establecen varias variables "estrellas", "iconEstrella", "icoNoEstrella", "total", "commentarie1", "score", "nom1", "fecha". 
-    Se creará el objeto "data2" con ayuda de algunas variables para su trabajo. Se determina el valor de la variable "estrella" y se agrega el valor de la imagen necesaria a la variable "estrella"(fuera del objeto y no confundirse con estrellas dentro del objeto).
-    Se agrega el contenido de la etiqueta con los datos a la variable "htmlContentAppend" y se pushea al innerHTML en la id="containerItemInfo" */
 });
 
-//funcion para la fecha 
+
 function dates() {
+    /*Función utilizada para establecer el formato de fecha para comentarios y misceláneos*/
     let date = new Date();
     let current_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     let current_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     let dateTime = current_date + " " + current_time;
     return dateTime;
 
-    /*Función para establecer la*/
 }
 
 
