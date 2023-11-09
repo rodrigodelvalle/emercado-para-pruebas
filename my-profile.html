@@ -67,6 +67,10 @@
       <br>
       <h3>Perfil</h3>
       <br>
+        <div id="imagenContainer">
+          <!-- Imagen predeterminada oculta al principio -->
+          <img id="imagenPredeterminada" src="/img/img_perfil.png">
+        </div>
       <div class="tab-pane" id="nav-userdata" role="tabpanel" aria-labelledby="nav-userdata-tab">
       <form class="needs-validation" id="perfilUsuario" novalidate>
         <div class="row gutters">
@@ -118,6 +122,12 @@
               </div>
             </div>
           </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div id="inputProfileImg" class="form-group mb-4">
+              <label>Imagen de perfil</label> <br>
+              <input class="form-control user-profile" type="file" id="inputFile" accept=".jpg, .jpeg, .png" style="width: auto;">
+            </div>
+          </div>
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="text-right">
               <button type="submit" id="saveUserData" name="submit" class="btn btn-primary">Guardar cambios</button>
@@ -125,14 +135,6 @@
           </div>
         </div>
       </form>
-  <div id="profileContainer">
-    <div id="imagenContainer">
-      <!-- Imagen predeterminada oculta al principio -->
-      <img id="imagenPredeterminada" src="/img/img_perfil.png" >
-      <input type="file" id="inputFile" accept=".jpg, .jpeg, .png">
-    </div>
-  </div>
-    </div>
   </main>
   <footer class="text-muted">
     <div class="container">

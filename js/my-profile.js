@@ -26,6 +26,7 @@ let segundoApellido= document.getElementById("segundoApellido");
 let email = document.getElementById("email");
 let telefono= document.getElementById("telefono");
 
+
 document.addEventListener('DOMContentLoaded', function(){
 let datosUsuario = JSON.parse(localStorage.getItem("guardarDatos"));
 primerNombre.value= datosUsuario.nombre1;
@@ -34,6 +35,7 @@ primerApellido.value= datosUsuario.apellido1;
 segundoApellido.value= datosUsuario.apellido2;
 email.value= datosUsuario.email;
 telefono.value=datosUsuario.telefono;
+
 })
 
 if(localStorage.getItem("username") || sessionStorage.getItem("username")) {
@@ -47,11 +49,13 @@ let form= document.getElementById("perfilUsuario");
     // Obtener valores
 
     let guardarVariables={
-nombre1:primerNombre.value, nombre2:segundoNombre.value, 
-apellido1:primerApellido.value, apellido2:segundoApellido.value,
-email:email.value, telefono:telefono.value
-
-    };
+  nombre1:primerNombre.value, 
+  nombre2:segundoNombre.value, 
+  apellido1:primerApellido.value,
+  apellido2:segundoApellido.value,
+  email:email.value,
+ telefono:telefono.value,
+ };
 
 localStorage.setItem("guardarDatos", JSON.stringify(guardarVariables));
   });
