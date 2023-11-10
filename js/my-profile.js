@@ -24,7 +24,6 @@ let primerApellido = document.getElementById("primerApellido");
 let segundoApellido = document.getElementById("segundoApellido");
 let email = document.getElementById("email");
 let telefono = document.getElementById("telefono");
-let profilePic = document.getElementById("inputFile");
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -35,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
   segundoApellido.value = datosUsuario.apellido2;
   email.value = datosUsuario.email;
   telefono.value = datosUsuario.telefono;
-  profilePic.value = datosUsuario.profilePic;
 
 })
 
@@ -55,9 +53,7 @@ form.addEventListener("submit", function () {
     apellido1: primerApellido.value,
     apellido2: segundoApellido.value,
     email: email.value,
-    telefono: telefono.value,
-    profilePic: profilePic.value,
-
+    telefono: telefono.value
   };
 
   localStorage.setItem("guardarDatos", JSON.stringify(guardarVariables));
@@ -71,6 +67,7 @@ function validate() {
   const forms = document.querySelectorAll('.needs-validation')
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
+
       if (!form.checkValidity()) {
         event.preventDefault();
         event.stopPropagation();
@@ -79,44 +76,60 @@ function validate() {
     }, false);
   })
 }
-
 document.addEventListener('DOMContentLoaded', function () {
   validate();
 }, false);
 
+// Selección de Elementos del DOM
 const inputFile = document.getElementById('inputFile');
 const imagenContainer = document.getElementById('imagenContainer');
 const imagenPredeterminada = document.getElementById('imagenPredeterminada');
 
-inputFile.addEventListener('change', (event) => {
-  const files = event.target.files;
-  if (files && files.length > 0) {
-    const file = files[0];
-    if (/\.(jpg|jpeg|png)$/i.test(file.name)) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        // Crear una nueva imagen
-        const img = new Image();
-        inputFile.src = e.target.result;
-        img.style.width = '100%';
-        img.style.height = 'auto';
+// Evento de Cambio en el Archivo de Entrada
+inputFile.addEventListener('change', e => {
+  // Lectura del Archivo Seleccionado
+  const file = inputFile.files[0];
+  const reader = new FileReader();
 
-        // Eliminar la imagen anterior del contenedor
-        //while (imagenContainer.firstChild) {
-        //  imagenContainer.removeChild(imagenContainer.firstChild);
-        //}
+  // Evento de Carga del FileReader
+  reader.addEventListener('load', () => {
+    // Creación y Mostrado de la Nueva Imagen
+    const img = new Image();
+    img.src = reader.result;
+    img.style.width = '100%';
+    img.style.height = 'auto';
 
-        // Mostrar la nueva imagen en el contenedor
-        imagenContainer.appendChild(img);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert('Formato de archivo no válido. Por favor, selecciona un archivo JPG o PNG.');
+    // Gestión de Imágenes en el Contenedor
+    while (imagenContainer.firstChild) {
+      imagenContainer.removeChild(imagenContainer.firstChild);
     }
-  } else {
-    // Mostrar la imagen predeterminada si no se selecciona ninguna foto
-    imagenContainer.appendChild(imagenPredeterminada);
+    imagenContainer.appendChild(img);
+
+    // Almacenamiento Local de la Nueva Imagen
+    localStorage.setItem("profilePic", reader.result);
+  });
+
+  if (file) {
+    // Leer el archivo como URL
+    reader.readAsDataURL(file);
   }
 });
 
+// Verificación y Carga de Imagen al Iniciar
+const storedImage = localStorage.getItem('profilePic');
+if (storedImage !== null && storedImage !== "") {
+  // Creación y Mostrado de Imagen al Iniciar
+  const img = new Image();
+  img.src = storedImage;
+  img.style.width = '100%';
+  img.style.height = 'auto';
 
+  // Gestión de Imágenes Predeterminadas
+  imagenContainer.appendChild(img);
+  if (imagenContainer.contains(imagenPredeterminada)) {
+    imagenContainer.removeChild(imagenPredeterminada);
+  }
+} else {
+  // Gestión de Imágenes Predeterminadas
+  imagenContainer.appendChild(imagenPredeterminada);
+}
