@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  //modo dark del nav
+  //modo dark y light del nav
   let nav = document.getElementById("navIndex")
   let mode = localStorage.getItem('mode')
   if (mode === 'dark') {
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 })
 window.addEventListener('load', function () {
-  // Llama a sumaDePrecios() u otras acciones que desees realizar al cargar la página.
+  // Llama a sumaDePrecios() al cargar la página.
   sumaDePrecios();
 });
 
@@ -28,30 +28,23 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch(URL_info)
     .then(response => response.json())
     .then(data => {
-      mostrarLista();
+      mostrarLista(); 
+      //El if chequea si el inner html esta vacío, 
+      //si esta vacio llama a la función showCartInfo en data.articles en la posición 0
       if (document.getElementById("productosCart").innerHTML.trim() === "") {
         showCartInfo(data.articles[0]);
       }
       let cantidades = document.getElementsByClassName('cant');
       for (let i = 0; i < cantidades.length; i++) { //Recorre los elementos que tienen la clase "cant"
         cantidades[i].addEventListener('input', recalcular);       // Asignar el evento 'input' a todos los elementos con la clase 'cant' después de cargar el contenido
-        cantidades[i].addEventListener('change', sumaDePrecios);
+        cantidades[i].addEventListener('change', sumaDePrecios); //A esos eventos se le ejcuta las funciones recalcular y sumaDePrecios
       }
     });
 
 });
-// document.addEventListener("DOMContentLoaded", () => {
-//   let carrito = JSON.parse[localStorage.getItem("arrayProductos")];
-//   getJSONData(URL_info).then(function (resultObj) {
-//     const objet = carrito.findIndex((product) => product.id == resultObj.data.articles[0].id)
-//     if (carrito == null) {   
-//       console.log("hola")   
-//       carrito.push(data.articles[0]);
-//       mostrarLista(carrito)
-//     } else { 
-//       mostrarLista(carrito) }
-//   })
 
+//Función para agregar productos al carrito de compras
+//Crea a una fila la agrega a la tabla de los productos  
 function showCartInfo(data) {
   let htmlContentToAppend = `
     <tr>
@@ -66,8 +59,9 @@ function showCartInfo(data) {
   document.getElementById("productosCart").innerHTML = htmlContentToAppend;
 }
 
+//Función que obtiene el arreglo de los productos del carrito que estan en el localStorage
+//Recorre el arreglo con un for y para cada producto del arreglo crea una fila con la información y lo agrega a la tabla 
 function mostrarLista() {
-  // Obtener productos del localStorage
   let arrayProductos = JSON.parse(localStorage.getItem('arrayProductos'));
   if (arrayProductos) {
     let content = "";
@@ -79,7 +73,7 @@ function mostrarLista() {
           <td class="precio">${arrayProductos[i].currency} ${arrayProductos[i].cost}</td>
           <td class="col"><input type="number" min="1" class="cant form-control w-50 mx-auto inputCart" value="1"></td>
           <td class="res"><b>${arrayProductos[i].currency} ${arrayProductos[i].cost}</b></td>
-          <td><button id=${arrayProductos[i].name} class="delete-btn" data-index="${i}"><i class="fa fa-trash" aria-hidden="true" onclick="borracion(${i})"></i></button></td> 
+          <td><button id=${arrayProductos[i].name} class="delete-btn" data-index="${i}"><i class="fa fa-trash" aria-hidden="true" onclick="borrado(${i})"></i></button></td> 
         </tr>
       `;
     } //se agregó el id=${arrayProductos[i].name arriba//
@@ -87,15 +81,20 @@ function mostrarLista() {
 
   }
 }
-function borracion(index) {                                                                //Función que obtiene el array de productos actual, elimina el valor "index" proporcionado por la misma etiqueta como variable
-  var obtenidoDeLocalStorage = JSON.parse(localStorage.getItem('arrayProductos'))          //Posteriormente reemplaza el localstorage actual con el nuevo, luego elimina todos los valores de la etiqueta con id="productosCart"
-  obtenidoDeLocalStorage.splice(index, 1)                                                   //Ejecuta la función mistrarLista() para volver a cargar los productos
+
+ //Función que obtiene el array de productos actual, elimina el valor "index" proporcionado por la misma etiqueta como variable
+function borrado(index) {                 
+   //Reemplaza el localstorage actual con el nuevo, luego elimina todos los valores de la etiqueta con id="productosCart"                                              
+  var obtenidoDeLocalStorage = JSON.parse(localStorage.getItem('arrayProductos')) 
+  //Ejecuta la función mostrarLista() para volver a cargar los productos        
+  obtenidoDeLocalStorage.splice(index, 1)                                                   
   localStorage.setItem('arrayProductos', JSON.stringify(obtenidoDeLocalStorage))
   document.getElementById("productosCart").innerHTML = "";
   mostrarLista()
 
 }
 
+//Función que permite la conversión de precios entre pesos UYU a dólares estadounidenses.
 function convertirAUSD(precio, currency) {
   if (currency === 'UYU') {
     const tasaCambio = 0.0243; // La tasa de cambio real 
@@ -105,6 +104,7 @@ function convertirAUSD(precio, currency) {
   }
 }
 
+// Función que suma todos los costos en la tabla y devuelve un string con el total
 function recalcular() {
   let cantidades = document.getElementsByClassName('cant');
   let precios = document.getElementsByClassName('precio');
@@ -112,6 +112,8 @@ function recalcular() {
   let sumaFinal = document.getElementById('totalForm');
   let sumaTotal = 0;
 
+//Recorre todos los items con la clase 'cant', multiplica la cantidad que hay de un producto por su precio
+//para obtener el precio final de un producto, luego suma los totales de multiples productos para saber el precio final del carrito 
   for (let i = 0; i < cantidades.length; i++) {
     let cantidad = parseInt(cantidades[i].value);
     let precio = convertirAUSD(precios[i].textContent.replace(/\D/g, ''), precios[i].textContent.split(' ')[0]); // Obtener la moneda 
@@ -122,8 +124,10 @@ function recalcular() {
   }
 
   sumaFinal.innerHTML = "USD " + sumaTotal.toFixed(2); // Muestra el subtotal en USD
+
 }
 
+//Función que suma los precios en "Costos"
 function sumaDePrecios() {
   let cantidades = document.getElementsByClassName('cant');
   let precios = document.getElementsByClassName('precio');
@@ -141,6 +145,7 @@ function sumaDePrecios() {
 
   sumaFinal.innerHTML = "USD " + sumaTotal;
 
+  //
   function actualizarSubtotal() {
     let subtotal = 0;
 
