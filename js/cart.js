@@ -145,7 +145,7 @@ function sumaDePrecios() {
 
   sumaFinal.innerHTML = "USD " + sumaTotal;
 
-  //
+  //Función que actualiza el Subtotal de los costos
   function actualizarSubtotal() {
     let subtotal = 0;
 
@@ -158,6 +158,8 @@ function sumaDePrecios() {
     return subtotal;
   }
 
+  //Función que obtiene el subtotal de costos y calcula el precio final según el tipo de envio
+  //Calcula el valor del precio de cada envio
   function actualizarPrecioFinal() {
     let subtotal = actualizarSubtotal();
     let premium = document.getElementById("premium");
@@ -165,6 +167,7 @@ function sumaDePrecios() {
     let estandar = document.getElementById("estandar");
     let envio = 0;
 
+    //Calcula el envio según que radio button este presionado
     if (premium.checked) {
       envio = subtotal * 0.15;
     } else if (express.checked) {
@@ -175,7 +178,7 @@ function sumaDePrecios() {
 
     let total = subtotal + envio;
 
-    // Actualizar los elementos HTML
+    // Actualiza los elementos en el HTML
     let sumaFinal = document.getElementById('totalForm');
     let precioFinal = document.getElementById('precioFinal');
     let valorEnvio = document.getElementById('envio');
@@ -185,18 +188,18 @@ function sumaDePrecios() {
     valorEnvio.innerHTML = "USD " + envio.toFixed(2);
   }
 
-  // Escuchar cambios en las cantidades en tiempo real
+  // Actualiza los cambios en las cantidades en tiempo real
   for (let i = 0; i < cantidades.length; i++) {
     cantidades[i].addEventListener('input', () => {
       actualizarPrecioFinal();
     });
   }
 
-  // Escuchar cambios en las opciones de envío
   let premium = document.getElementById("premium");
   let express = document.getElementById("express");
   let estandar = document.getElementById("estandar");
 
+  //Al hacer click en los radio buttons ejecuta la función, agregando el evento correspondiente  
   premium.addEventListener('click', () => {
     actualizarPrecioFinal();
   });
@@ -216,44 +219,22 @@ function sumaDePrecios() {
 // Llama a la función para inicializar todo
 sumaDePrecios();
 
-premium.addEventListener('click', () => {
-  let valorEnvio = document.getElementById('envio');
-  let envioPremium = sumaTotal * 0.15;
-  valorEnvio.innerHTML = "USD " + envioPremium.toFixed(2);
-  total = sumaTotal + envioPremium;
-  precioFinal.innerHTML = "<b>" + "USD " + total.toFixed(2) + "</b>";
-
-})
-express.addEventListener('click', () => {
-  let valorEnvio = document.getElementById('envio');
-  let envioExpres = sumaTotal * 0.07
-  valorEnvio.innerHTML = "USD " + envioExpres.toFixed(2)
-  total = sumaTotal + envioExpres
-  precioFinal.innerHTML = "<b>" + "USD " + total.toFixed(2) + "</b>";
-
-})
-estandar.addEventListener('click', () => {
-  let valorEnvio = document.getElementById('envio');
-  let envioEstandar = sumaTotal * 0.05
-  valorEnvio.innerHTML = "USD " + envioEstandar.toFixed(2)
-  total = sumaTotal + envioEstandar
-
-  precioFinal.innerHTML = "<b>" + "USD " + total.toFixed(2) + "</b>";
-})
-
-// Funcion para mostrar el modal compras//
+// Funcion para mostrar el modal compras
 document.getElementById("openModal").addEventListener("click", function () {
   document.getElementById("paymentModal").style.display = "block";
 });
-// Funcion para cerrar el modal compras//
+// Funcion para cerrar el modal compras
 document.getElementById("closeModal").addEventListener("click", function () {
   document.getElementById("paymentModal").style.display = "none";
   localStorage.removeItem('selectedMethod');
 });
-// Funcion para guardar los datos de la compra //
+// Funcion para guardar los datos de la compra
 document.getElementById("paymentMethod").addEventListener("change", function () {
   var selectedMethod = this.value;
 
+  //Estructuras if y else if que controlan cual opción esta seleccionada en la modal 
+  //Dependiendo de la opción oculta los elementos de la otra opción
+  //Si no hay niguna opción seleccionada manda una alerta para que se seleccione el metodo de pago 
   document.getElementById("creditCardDetails").classList.add("hidden");
   document.getElementById("bankTransferDetails").classList.add("hidden");
   document.getElementById("seleccionarPago").classList.add("hidden");
@@ -285,6 +266,7 @@ document.getElementById("paymentMethod").addEventListener("change", function () 
   }
 });
 
+//Dependiendo que opción selecciona muestra en pantalla el nombre del metodo de pago
 function mostrarPago() {
   var selectedMethod = localStorage.getItem('selectedMethod');
   var pagoSeleccionado = document.getElementById("titleFormaDePago");
@@ -297,11 +279,11 @@ function mostrarPago() {
 }
 mostrarPago();
 
+//Chequea algunas validaciones del formulario del modal 
 document.getElementById("paymentForm").addEventListener("submit", function (event) {
   event.preventDefault();
 
   // Recopila los datos del formulario
-
   var cardNumber = document.getElementById("cardNumber").value;
   var expirationDate = document.getElementById("expirationDate").value;
   var bankAccount = document.getElementById("bankAccount").value;
@@ -326,14 +308,12 @@ document.getElementById("paymentForm").addEventListener("submit", function (even
 });
 document.getElementById("paymentModal").style.display = "none";
 
-// Example starter JavaScript for disabling form submissions if there are invalid fields
+//Estructura de boostrap que valida los formularios, si no se cumple con las validaciones evita el envio del formulario
 (() => {
   'use strict'
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
   const forms = document.querySelectorAll('.needs-validation')
 
-  // Loop over them and prevent submission
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
       if (!form.checkValidity()) {
@@ -345,63 +325,59 @@ document.getElementById("paymentModal").style.display = "none";
   })
 })()
 
-//Validacion de radio buttons
+
+//Función que chequea si el modal esta completado antes de enviar el formulario 
 function envios() {
-  const envios = document.getElementsByName("env");
-  if (localStorage.getItem("paymentForm") === null) {  // verifica que haya algo en el local, ya sea tarjeta o transferencia y si no hay debería mostrar el mensaje
-    let content = "";
-    content +=
-    `
-    <div class="text-danger">
-            Por favor, ingrese un metodo de pago.
-          </div>
-    `
-    document.getElementById("titleFormaDePago").innerHTML = content;
-  } else {
-  // Itera a través de los botones de radio
-  for (let envio of envios) {
-    // Verifica si el botón de radio está marcado
-    if (envio.checked) {
-      // Si está marcado, aplica la clase "is-valid" y quita la clase "is-invalid"
-      envio.classList.remove("is-invalid");
-      envio.classList.add("is-valid");
-    } else {
-      // Si no está marcado, quita la clase "is-valid" y aplica la clase "is-invalid"
-      envio.classList.remove("is-valid");
-      envio.removeAttribute('class');
-    }
+    document.getElementById("titleFormaDePago").classList.add("text-danger");
+    document.getElementById("titleFormaDePago").innerHTML = "Por favor, ingrese un metodo de pago.";
   }
-}}
+
+//Funcion para validar que se haya seleccionado una opcion en el select del modal 
+//Aporte feedback a traves de alertas 
+const envioForm = document.getElementById("formDatosEnvio");
+const paymentForm = document.getElementById("paymentForm");
+
+envioForm.addEventListener('submit', async function (event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  if (!paymentForm.checkValidity()) {
+    envios();
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Debes completar todos los campos.',
+    });
+  } else if (!envioForm.checkValidity()) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Debes completar todos los campos.',
+    });
+  } else {
+    Swal.fire({
+      title: 'Genial',
+      text: 'Tu compra se realizó con éxito.',
+      icon: 'success',
+      showCancelButton: true, 
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'OK',
+      showLoaderOnConfirm: true,
+      preConfirm: async () => {
+    //Funcion de sweet alert para que espere a colocar ok antes de enviarse el formulario
+    //Espera a que se resuelva la promesa del alert con una funcion asincronica y espera un tiempo antes de enviar el formulario
+
+        // Una simulación de espera de 1000 milisegundo 
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        //Aqui se envia el form
+        envioForm.submit();
+      }
+    });
+  }
+});
 
 
-
-  const envioForm = document.getElementById("formDatosEnvio");
-  const paymentForm = document.getElementById("paymentForm");
-  envioForm.addEventListener('submit', function (event){
-  
-    if (!paymentForm.checkValidity()) {
-      event.preventDefault();
-      event.stopPropagation();
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Debes completar todos los campos.',
-      })
-    } else if (!envioForm.checkValidity()) {
-      event.preventDefault();
-      event.stopPropagation();
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Debes completar todos los campos.',
-      })
-    } else {
-   alert("Genial, tu compra se realizó con exito.")
-    }
-    
-   
-  })
-
+  //Aporte feedback a traves de alertas 
   let botonconfirmar = document.getElementById('btnn');
   let metodoDePago = document.getElementById("titleFormaDePago")
   let modal = document.getElementById('paymentModal');
@@ -420,12 +396,11 @@ function envios() {
     if (!envioForm.checkValidity()) {
       event.preventDefault();
       event.stopPropagation();
-     
-    
+envios();
+   
     }else {
       
       event.preventDefault()
     }
-    
     
   })
