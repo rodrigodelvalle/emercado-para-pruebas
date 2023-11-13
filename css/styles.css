@@ -413,9 +413,6 @@ margin-left: 400px;
   h4 {
     font-size: 3.5vh;
   }
-  #productSearch, .btn {
-    font-size: 2vh;
-  }
   #categoryName {
     font-size: 1000vh;
   }
@@ -447,7 +444,10 @@ margin-left: 400px;
   font-size: 2vh;
   }
 }
-.nav-item , .navbar-brand{
+.nav-item {
+  margin-right: 50px;
+}
+a.navbar-brand  {
   margin-right: 50px;
 }
 
